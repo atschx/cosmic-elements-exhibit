@@ -27,47 +27,52 @@ export class DataError extends Error {
   }
 }
 
-type Rec = Record<string, unknown>;
+export type Rec = Record<string, unknown>;
 
 const isRec = (v: unknown): v is Rec => typeof v === 'object' && v !== null && !Array.isArray(v);
 
-function rec(v: unknown, path: string): Rec {
+export function rec(v: unknown, path: string): Rec {
   if (!isRec(v)) throw new DataError(path, 'expected an object');
   return v;
 }
 
-function arr(v: unknown, path: string): unknown[] {
+export function arr(v: unknown, path: string): unknown[] {
   if (!Array.isArray(v)) throw new DataError(path, 'expected an array');
   return v;
 }
 
-function str(o: Rec, key: string, path: string): string {
+export function str(o: Rec, key: string, path: string): string {
   const v = o[key];
   if (typeof v !== 'string' || v.trim() === '')
     throw new DataError(`${path}.${key}`, 'expected a non-empty string');
   return v;
 }
 
-function optStr(o: Rec, key: string, path: string): string | undefined {
+export function optStr(o: Rec, key: string, path: string): string | undefined {
   if (!(key in o) || o[key] === undefined) return undefined;
   return str(o, key, path);
 }
 
-function num(o: Rec, key: string, path: string): number {
+export function num(o: Rec, key: string, path: string): number {
   const v = o[key];
   if (typeof v !== 'number' || !Number.isFinite(v))
     throw new DataError(`${path}.${key}`, 'expected a finite number');
   return v;
 }
 
-function int(o: Rec, key: string, path: string, min: number, max: number): number {
+export function int(o: Rec, key: string, path: string, min: number, max: number): number {
   const v = num(o, key, path);
   if (!Number.isInteger(v) || v < min || v > max)
     throw new DataError(`${path}.${key}`, `expected an integer in [${min}, ${max}], got ${v}`);
   return v;
 }
 
-function oneOf<T extends string>(o: Rec, key: string, path: string, allowed: readonly T[]): T {
+export function oneOf<T extends string>(
+  o: Rec,
+  key: string,
+  path: string,
+  allowed: readonly T[],
+): T {
   const v = str(o, key, path);
   if (!(allowed as readonly string[]).includes(v))
     throw new DataError(`${path}.${key}`, `"${v}" is not one of ${allowed.join(', ')}`);
@@ -82,7 +87,7 @@ function color(o: Rec, key: string, path: string): string {
 }
 
 /** Spread-safe optional assignment: keeps `exactOptionalPropertyTypes` happy. */
-const opt = <K extends string, V>(key: K, v: V | undefined): Partial<Record<K, V>> =>
+export const opt = <K extends string, V>(key: K, v: V | undefined): Partial<Record<K, V>> =>
   v === undefined ? {} : ({ [key]: v } as Record<K, V>);
 
 export function parseCategories(raw: unknown, path = 'categories.json'): Category[] {

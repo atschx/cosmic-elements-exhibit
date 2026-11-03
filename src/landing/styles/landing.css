@@ -1,0 +1,344 @@
+/* =====================================================================
+   Landing page — reading layer on top of the exhibit's design tokens.
+   The exhibit is an *operating* surface (fixed viewport, no scroll); this
+   page is a *reading* surface: a normal document flow, a measured text
+   column, scroll-reveal choreography and the stage colour following the story.
+   ===================================================================== */
+:root {
+  --gutter: clamp(16px, 4vw, 48px);
+  --measure: 36em; /* ≈ 36 CJK characters per line at the body size */
+  --l-body: clamp(16px, 0.3vw + 14.8px, 18px);
+  --l-small: clamp(13px, 0.2vw + 12px, 14.5px);
+  --l-top-h: 60px;
+  --l-ink: #dfe6ee;
+  --l-ink-soft: #c9d2dc;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-padding-top: calc(var(--l-top-h) + 16px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--txt);
+  font-family: var(--font);
+  font-size: var(--l-body);
+  line-height: 1.8;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img {
+  max-width: 100%;
+}
+a {
+  color: inherit;
+}
+kbd {
+  display: inline-block;
+  min-width: 1.9em;
+  padding: 1px 7px;
+  border: 1px solid #3a4656;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: #0a0e14;
+  color: #e2e8f0;
+  font-family: var(--mono);
+  font-size: 0.82em;
+  line-height: 1.6;
+  text-align: center;
+  white-space: nowrap;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--stage-color) 80%, #fff);
+  outline-offset: 3px;
+}
+
+/* ---------- Backdrop: starfield canvas + stage-coloured nebula ---------- */
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.l-nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% -10%,
+      color-mix(in srgb, var(--stage-color) 18%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 45% 35% at 90% 40%,
+      color-mix(in srgb, var(--stage-color) 7%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(ellipse 50% 40% at 0% 80%, rgba(255, 255, 255, 0.03), transparent 70%);
+}
+.l-page {
+  position: relative;
+  z-index: 1;
+}
+.l-wrap {
+  width: min(100% - 2 * var(--gutter), 1120px);
+  margin-inline: auto;
+  padding-left: max(0px, calc(var(--safe-left) - var(--gutter)));
+  padding-right: max(0px, calc(var(--safe-right) - var(--gutter)));
+}
+
+/* ---------- Bilingual pairs ---------- */
+.bi .en {
+  color: var(--muted);
+}
+.bi:not(.bi-block) .en::before {
+  content: '·';
+  margin: 0 0.5em;
+  color: var(--dim);
+}
+.bi-block .zh,
+.bi-block .en {
+  display: block;
+}
+
+/* ---------- Section accents: each part of the story has its own furnace colour ---------- */
+[data-accent='big-bang'] {
+  --stage-color: var(--c-big-bang);
+}
+[data-accent='cosmic-rays'] {
+  --stage-color: var(--c-cosmic-rays);
+}
+[data-accent='low-mass-stars'] {
+  --stage-color: var(--c-low-mass-stars);
+}
+[data-accent='massive-stars'] {
+  --stage-color: var(--c-massive-stars);
+}
+[data-accent='white-dwarfs'] {
+  --stage-color: var(--c-white-dwarfs);
+}
+[data-accent='neutron-star-mergers'] {
+  --stage-color: var(--c-neutron-star-mergers);
+}
+[data-accent='human-synthesis'] {
+  --stage-color: var(--c-human-synthesis);
+}
+
+/* ---------- Headings & calls to action ---------- */
+.h-section {
+  margin: 0 0 0.45em;
+  font-size: clamp(24px, 1vw + 17px, 34px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+.h-section .en {
+  font-size: 0.6em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.kicker,
+.sec-label {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stage-color);
+}
+.kicker .en,
+.sec-label .en {
+  color: color-mix(in srgb, var(--stage-color) 70%, var(--muted));
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  min-height: 48px;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease,
+    background-color 0.4s ease;
+}
+.cta .arrow {
+  font-weight: 400;
+  transition: transform 0.25s ease;
+}
+.cta.primary {
+  color: #04121a;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--stage-color) 78%, #fff),
+    var(--stage-color)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 0 0 1px color-mix(in srgb, var(--stage-color) 55%, transparent),
+    0 12px 34px color-mix(in srgb, var(--stage-color) 32%, transparent);
+}
+.cta.primary .en {
+  color: rgba(4, 18, 26, 0.72);
+}
+.cta.primary .bi .en::before {
+  color: rgba(4, 18, 26, 0.45);
+}
+.cta.ghost {
+  color: var(--txt);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+}
+.cta.big {
+  min-height: 56px;
+  padding: 14px 30px;
+  font-size: 17px;
+  border-radius: 14px;
+}
+@media (hover: hover) {
+  .cta:hover {
+    transform: translateY(-1px);
+  }
+  .cta.primary:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 0 0 1px color-mix(in srgb, var(--stage-color) 70%, #fff 10%),
+      0 16px 44px color-mix(in srgb, var(--stage-color) 45%, transparent);
+  }
+  .cta.primary:hover .arrow {
+    transform: translateX(3px);
+  }
+  .cta.ghost:hover {
+    border-color: color-mix(in srgb, var(--stage-color) 60%, transparent);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .cta.ghost:hover .arrow {
+    transform: translateY(3px);
+  }
+}
+.cta:active {
+  transform: translateY(1px);
+}
+
+/* ---------- Scroll reveal ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+[data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Footer: sources & credits ---------- */
+.l-footer {
+  border-top: 1px solid var(--line);
+  padding: clamp(40px, 7vh, 80px) 0 calc(36px + var(--safe-bottom));
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4));
+}
+.credit-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin: 28px 0 0;
+}
+.credit dt {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stage-color);
+}
+.credit dt .en {
+  color: color-mix(in srgb, var(--stage-color) 70%, var(--muted));
+}
+.credit dd {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--l-ink-soft);
+}
+.credit dd p {
+  margin: 0;
+}
+.credit dd .en {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.credit-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 4px;
+  color: var(--txt);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in srgb, var(--stage-color) 60%, transparent);
+}
+.colophon {
+  margin: 36px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.colophon a {
+  color: var(--txt);
+  text-decoration-color: color-mix(in srgb, var(--stage-color) 60%, transparent);
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .credit-list {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+/* ---------- Motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    transition: none;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .cta,
+  .cta .arrow {
+    transition: none;
+  }
+}

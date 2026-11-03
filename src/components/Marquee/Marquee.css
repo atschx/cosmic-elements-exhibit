@@ -197,3 +197,27 @@
 .toggle.drawer-tab {
   display: none;
 }
+/* "← 故事 · Story": a quiet text link among the toggles; the phone-row variant lives in styles/mobile.css */
+.toggle.story-link {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--muted);
+  text-decoration: none;
+}
+.toggle.story-link:active {
+  transform: none;
+}
+@media (hover: hover) {
+  .toggle.story-link:hover {
+    color: var(--txt);
+    border-color: #334155;
+  }
+}
+.story-link-row {
+  display: none;
+}
+html.present .story-link,
+html.present .story-link-row {
+  display: none;
+}

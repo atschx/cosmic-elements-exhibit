@@ -1,0 +1,376 @@
+{
+  "source": {
+    "title": "用 AI 把上海天文馆的周期表，搬回每一个校园",
+    "author": "常皓",
+    "account": "常胖",
+    "platform": { "zh": "微信公众号", "en": "WeChat Official Account" },
+    "publishedAt": "2026-11-02",
+    "url": "https://mp.weixin.qq.com/s/JSUsGMmqGWeNF2DdOIkHbw"
+  },
+  "links": {
+    "repo": "https://github.com/atschx/cosmic-elements-exhibit"
+  },
+  "nav": {
+    "brand": { "zh": "宇宙元素起源表", "en": "Cosmic Nucleosynthesis" },
+    "story": { "zh": "故事", "en": "Story" },
+    "exhibit": { "zh": "展厅", "en": "Exhibit" }
+  },
+  "hero": {
+    "kicker": { "zh": "一个展项背后的故事", "en": "The story behind the exhibit" },
+    "title": {
+      "zh": "用 AI 把上海天文馆的周期表，搬回每一个校园",
+      "en": "Bringing the Shanghai Astronomy Museum's periodic table back to every classroom"
+    },
+    "lead": {
+      "zh": "我们皆由星尘所铸，而今天，人人都可以亲手点亮星尘。",
+      "en": "We are all made of starstuff — and today, anyone can light it up with their own hands."
+    },
+    "cta": { "zh": "进入展厅", "en": "Enter the exhibit" },
+    "secondary": { "zh": "先读故事", "en": "Read the story first" },
+    "figure": {
+      "src": "story/hero-exhibit.webp",
+      "width": 1600,
+      "height": 900,
+      "alt": "宇宙元素起源表网页展厅：全景一览，118 格元素灯箱墙全部点亮，下方是两条机械拉杆的控制台",
+      "caption": { "zh": "网页展厅 · 全景一览", "en": "The web exhibit in panorama" }
+    }
+  },
+  "sections": [
+    {
+      "id": "prologue",
+      "label": { "zh": "引子", "en": "Prologue" },
+      "accent": "neutron-star-mergers",
+      "leadEn": "On the second floor of the Shanghai Astronomy Museum, a wall of lightboxes and a curved console stopped me in my tracks.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "在上海天文馆二楼的“宇宙”展区，我被一面巨大的元素周期表墙绊住了脚步。"
+        },
+        {
+          "type": "p",
+          "text": "展项是一面元素周期表的亚克力灯箱墙，墙的正前方是一个弧形控制台，上面刻着宇宙演化的不同阶段：从大爆炸、大质量恒星超新星爆发，到白矮星热核炸裂、双中子星合并，再到人类实验室合成。"
+        },
+        { "type": "p", "text": "当你把控制台拨向“大爆炸”，背后的灯箱墙只亮起“氢”与“氦”；" },
+        {
+          "type": "p",
+          "text": "当你推向“双中子星合并”，整面墙瞬间暗下，唯独金（Au）、铂（Pt）、铀（U）等重元素，像多米诺骨牌一样依次翻转点亮。"
+        },
+        {
+          "type": "quote",
+          "text": "“We are made of starstuff.”",
+          "cite": "卡尔·萨根 · Carl Sagan"
+        },
+        {
+          "type": "p",
+          "text": "那一刻，卡尔·萨根的这句名言不再是一句浪漫的修辞，而是变成了极其直观的视觉暴击 —— 原来，我们每呼吸一口的**氧**，是一颗巨星最后的馈赠；我们血液里流淌的**铁**，曾是一颗炸裂的白矮星；我们指尖上的**黄金**，诞生于数十亿年前两颗死星相撞的千分之一秒。"
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "src": "story/museum-wall.webp",
+            "width": 1600,
+            "height": 900,
+            "alt": "上海天文馆「宇宙」展区：弧形排列的元素周期表亚克力灯箱墙，前方是刻有「元素来源」与「元素丰度」两条滑轨的弧形控制台",
+            "caption": {
+              "zh": "上海天文馆二楼「宇宙」展区：元素周期表灯箱墙与弧形控制台（原文配图）",
+              "en": "The lightbox wall and curved console on the museum's second floor (photo from the original post)"
+            }
+          }
+        },
+        {
+          "type": "p",
+          "text": "站在展台前，我突然冒出一个念头：这么震撼的科普逻辑，为什么只能留在天文馆的围墙里？"
+        },
+        {
+          "type": "p",
+          "text": "如果把它变成一个网页教具，明天全国的物理、化学、科学老师，岂不是都能在教室大屏上直接推杆演示？"
+        }
+      ]
+    },
+    {
+      "id": "vibe-coding",
+      "num": "01",
+      "title": { "zh": "酒店里的 Vibe Coding", "en": "Vibe coding in a hotel room" },
+      "accent": "big-bang",
+      "leadEn": "Back at the hotel that night, not a line of code was typed by hand: the console's physical feel was described to an AI, and ninety minutes later the exhibit ran in a browser.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "晚上回到酒店，开启了一场沉浸式的 Vibe Coding。没写一行代码，只做了两件事：定义科学边界，死磕交互“仪式感”。向 AI 严苛地描述了上海天文馆那个控制台的物理精髓："
+        },
+        {
+          "type": "list",
+          "items": [
+            "**拒绝扁平表格**：深空哑光边框 + 磨砂亚克力背光灯箱的物理质感；",
+            "**拒绝瞬间亮起**：3D 立体翻转 + 26 毫秒阶梯延迟的“波浪级联点亮”；",
+            "**原生机械音效**：零外部音频依赖，直接调用浏览器的 Web Audio API，用纯数学振荡器现场合成**机械继电器吸合的“咔哒”声**，以及**低频引力场的通电嗡鸣**。"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "短短一个半小时的碰撞与调优，一个**纯单文件、零外部依赖、全中英双语**的《上海天文馆 · 宇宙元素起源表》就跑通了。"
+        },
+        {
+          "type": "video",
+          "href": "https://mp.weixin.qq.com/s/JSUsGMmqGWeNF2DdOIkHbw",
+          "label": {
+            "zh": "在原文中观看演示视频",
+            "en": "Watch the demo video in the original post"
+          },
+          "poster": {
+            "src": "story/demo-video-poster.webp",
+            "width": 1280,
+            "height": 720,
+            "alt": "演示视频封面：宇宙元素起源表 —— 把 138 亿年的宇宙演化，装进一张元素周期表",
+            "caption": {
+              "zh": "原文内嵌的演示视频，托管在微信，点击封面前往观看",
+              "en": "The demo video is hosted on WeChat — tap the poster to watch it there"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "details",
+      "num": "02",
+      "title": { "zh": "藏在代码里的细节", "en": "The details hidden in the code" },
+      "accent": "massive-stars",
+      "leadEn": "A few hundred kilobytes of HTML, polished like a museum piece: a mechanical lever, a bilingual dossier for all 118 elements, and a hands-free mode for the classroom.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "虽然它只是一个几百 KB 的独立 HTML 文件（哪怕教室断网也能用浏览器满帧运行），但里面的细节完全是按博物馆级展项打磨的："
+        },
+        {
+          "type": "p",
+          "num": "1",
+          "text": "**弧形太空舱机械推杆** 底部还原成了带倾斜透视的金属控制面板。当你用鼠标或手指拖动时间线拉杆、划过 8 个宇宙纪元刻度时，不仅有清晰的机械棘轮滴答声，控制台还会向上辐射出两道引力波脉冲光环。"
+        },
+        {
+          "type": "p",
+          "num": "2",
+          "text": "**118 个元素的双语“星尘档案”** 悬停或点击任意一个元素灯箱，都会弹出一块毛玻璃遥测卡片（HUD）。里面不仅有严谨的原子质量、电子排布、核合成物理过程，还有专门为课堂讲述准备的双语叙事金句："
+        },
+        {
+          "type": "elements",
+          "items": [
+            {
+              "z": 1,
+              "symbol": "H",
+              "name": "氢",
+              "accent": "big-bang",
+              "text": "你体内每一滴水里，都藏着 138 亿年前大爆炸的余温。"
+            },
+            {
+              "z": 20,
+              "symbol": "Ca",
+              "name": "钙",
+              "accent": "massive-stars",
+              "text": "你的骨骼与牙齿，是大质量恒星氧燃烧与硅燃烧的直接遗产。"
+            },
+            {
+              "z": 26,
+              "symbol": "Fe",
+              "name": "铁",
+              "accent": "white-dwarfs",
+              "text": "核聚变到铁为止——它是恒星的终点，也是你血液中氧的载体。"
+            },
+            {
+              "z": 79,
+              "symbol": "Au",
+              "name": "金",
+              "accent": "neutron-star-mergers",
+              "text": "你指上的戒指，诞生于两颗中子星相撞的瞬间。"
+            },
+            {
+              "z": 118,
+              "symbol": "Og",
+              "name": "鿫",
+              "pinyin": "ào",
+              "accent": "human-synthesis",
+              "text": "周期表的尽头。星尘，学会了铸造新的星尘。"
+            }
+          ]
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "src": "story/web-hud-gold.webp",
+            "width": 1440,
+            "height": 904,
+            "alt": "网页展厅截图：拉杆停在「双中子星合并」档，金 Au 被固定，毛玻璃遥测卡片显示原子质量、电子排布、核合成过程与六域丰度",
+            "caption": {
+              "zh": "网页版：拉杆拨到「双中子星合并」，点开金（Au）的星尘档案（原文配图）",
+              "en": "The web version at the neutron-star-merger notch, with gold's dossier open (screenshot from the original post)"
+            }
+          }
+        },
+        {
+          "type": "p",
+          "num": "3",
+          "text": "**专为老师设计的“课堂脱手模式”** 站在讲台上讲课时，老师不需要一直操作鼠标："
+        },
+        {
+          "type": "list",
+          "items": [
+            "按 **Space** 空格键：开启**自动巡航演播**，自带环形倒计时；",
+            "按 **F** 键：一键进入**投影全屏模式**；",
+            "按 **A** 键：瞬间切换至“138 亿年全景全开”，七种宇宙熔炉色彩同屏闪耀。"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "甚至考虑到部分教室老旧电脑缺乏生僻字库，程序还内置了 Canvas 字形探测——一旦发现第 104~118 号超重元素（如 𬬻、鿬、鿫）无法正常渲染，会自动无缝降级为拼音标注，绝不在课堂上出现尴尬的“空白方框”。"
+        }
+      ]
+    },
+    {
+      "id": "observation",
+      "num": "03",
+      "title": { "zh": "对这个时代的一点观察", "en": "A small observation about this era" },
+      "accent": "white-dwarfs",
+      "leadEn": "Looking up at a museum wall in the morning and rebuilding it in a hotel room by night — what that fold in time says about making things with AI.",
+      "blocks": [
+        { "type": "p", "text": "**上午在场馆里仰望，晚上在酒店里复刻。**" },
+        { "type": "p", "text": "这种奇妙的时空折叠感，是我对当下 AI 时代最真切的一个切片观察。" },
+        {
+          "type": "p",
+          "text": "过去，把一个脑海中的科普创意变成一套声光电俱全的交互软件，需要立项、需要前端工程师、需要 UI 设计师和音效师。高昂的工程成本，让绝大多数一线教师和科普创作者只能望而却步。"
+        },
+        {
+          "type": "p",
+          "text": "以前我们逛科技馆，最多拍张照、买个冰箱贴，那套耗资不菲的交互系统是“焊死”在展馆水泥地上的。"
+        },
+        {
+          "type": "p",
+          "text": "**而今天，实现的工程门槛几乎被 AI 抹平了。我们可以把整套交互逻辑“打包带走”，变成一个链接，直接发进偏远山区的中学课堂。**"
+        },
+        { "type": "p", "text": "但这并不意味着人的价值在贬值。" },
+        {
+          "type": "p",
+          "text": "恰恰相反——当造轮子的成本趋近于零，**“你在现实世界里被什么打动”、“你能否洞察一套好交互背后的物理隐喻”、“你如何把冷冰冰的技术转化为赋能他人的温度”**，成了真正稀缺的壁垒。"
+        },
+        { "type": "p", "text": "科普教育最怕的是照本宣科。" },
+        {
+          "type": "p",
+          "text": "如果一个老师在讲台上只花 5 分钟，拉动这根宇宙时间线拉杆，带孩子们听着继电器清脆的咔哒声，看完全部 118 种元素在 138 亿年间的诞生波浪，也许就能在一个孩子心里种下一颗天体物理的种子。"
+        },
+        { "type": "quote", "text": "不要只是围观 AI 的浪潮，去用它接住你生活里一闪而过的灵感。" },
+        {
+          "type": "p",
+          "text": "无论是给课堂做一个看得见的科学装置，还是给生活写一个顺手的小工具——在这个时代，只要你敢想，上午的惊鸿一瞥，晚上就能变成手里的现实。"
+        }
+      ]
+    }
+  ],
+  "exhibit": {
+    "heading": { "zh": "展品是什么", "en": "What's in the exhibit" },
+    "intro": {
+      "zh": "一面 118 格的元素灯箱墙，两条机械拉杆，一张会呼吸的玻璃遥测卡片。桌面、iPad 与手机均可操作。",
+      "en": "A 118-tile lightbox wall, two mechanical levers and a glass telemetry card — on desktop, iPad and phone."
+    },
+    "cards": [
+      {
+        "id": "origin",
+        "title": { "zh": "元素来源拉杆", "en": "Origin lever" },
+        "text": {
+          "zh": "八档纪元：从大爆炸的氢与氦，到中子星合并的金与铀，再到人工合成与 138 亿年全景；每一档点亮该过程锻造的元素。",
+          "en": "Eight notches, from the Big Bang's hydrogen and helium to the gold of neutron-star mergers, human-made elements and the full panorama — each lights the elements that process forged."
+        },
+        "keys": ["←", "→", "1–8"],
+        "figure": {
+          "src": "story/card-origin.webp",
+          "width": 1280,
+          "height": 720,
+          "alt": "展厅截图：来源拉杆停在双中子星合并档，36 个重元素点亮，金 Au 的遥测卡片打开"
+        }
+      },
+      {
+        "id": "abundance",
+        "title": { "zh": "元素丰度拉杆", "en": "Abundance lever" },
+        "text": {
+          "zh": "六个领域：宇宙、太阳系、地壳、大气、海洋、人体；灯箱亮度随质量分数变化，格内直接标出占比。",
+          "en": "Six realms — universe, solar system, Earth's crust, atmosphere, ocean, human body; tile glow follows mass fraction, with the share printed on each tile."
+        },
+        "keys": ["↑", "↓"],
+        "figure": {
+          "src": "story/card-abundance.webp",
+          "width": 1280,
+          "height": 720,
+          "alt": "展厅截图：丰度拉杆停在人体档，氧、碳、氢、氮等元素按质量分数发光并标出百分比"
+        }
+      },
+      {
+        "id": "presentation",
+        "title": { "zh": "演示模式", "en": "Presentation mode" },
+        "text": {
+          "zh": "一键收起面板，灯箱墙铺满投影；Space 自动巡航、F 全屏、A 全景全开，讲台上不用再碰鼠标。",
+          "en": "Panels fold away and the wall fills the projector; Space runs the docent loop, F goes fullscreen, A lights everything — no mouse needed at the lectern."
+        },
+        "keys": ["P", "Space", "F", "A"],
+        "figure": {
+          "src": "story/card-present.webp",
+          "width": 1280,
+          "height": 720,
+          "alt": "展厅截图：演示模式下两侧面板收起，全景一览的灯箱墙铺满整个画面"
+        }
+      }
+    ]
+  },
+  "outro": {
+    "heading": { "zh": "现在，轮到你推动拉杆了", "en": "Now it's your turn at the lever" },
+    "text": {
+      "zh": "展厅在桌面浏览器、iPad 与手机上都可以打开；也可以下载单文件版本，断网的教室里同样满帧运行。",
+      "en": "The exhibit opens in any desktop browser, on iPad and on phones; a single-file build runs at full frame rate even in an offline classroom."
+    },
+    "cta": { "zh": "进入展厅", "en": "Enter the exhibit" },
+    "shortcutsHeading": { "zh": "快捷键速览", "en": "Keyboard shortcuts" }
+  },
+  "shortcuts": [
+    { "keys": ["←", "→"], "action": { "zh": "推动当前拉杆", "en": "Move the active lever" } },
+    {
+      "keys": ["↑", "↓"],
+      "action": { "zh": "切换拉杆：来源 / 丰度", "en": "Switch lever: origin / abundance" }
+    },
+    { "keys": ["1", "–", "8"], "action": { "zh": "直达纪元", "en": "Jump to an epoch" } },
+    { "keys": ["Space"], "action": { "zh": "自动巡航演播", "en": "Docent loop" } },
+    { "keys": ["A"], "action": { "zh": "全景全开", "en": "All starstuff" } },
+    { "keys": ["P"], "action": { "zh": "演示模式", "en": "Presentation mode" } },
+    { "keys": ["F"], "action": { "zh": "全屏", "en": "Fullscreen" } },
+    { "keys": ["M"], "action": { "zh": "静音", "en": "Mute" } },
+    {
+      "keys": ["Esc"],
+      "action": { "zh": "关闭 / 取消固定 / 停止巡航", "en": "Close / unpin / stop the loop" }
+    }
+  ],
+  "credits": {
+    "heading": { "zh": "来源与致谢", "en": "Sources & credits" },
+    "items": [
+      {
+        "label": { "zh": "故事原文", "en": "Original story" },
+        "text": {
+          "zh": "《用 AI 把上海天文馆的周期表，搬回每一个校园》，作者常皓，发表于微信公众号「常胖」，2026 年 11 月 2 日。本页正文摘自原文；展馆照片、网页截图与视频封面均来自原文，版权归原作者所有。",
+          "en": "“Bringing the Shanghai Astronomy Museum's periodic table back to every classroom” by Chang Hao, published on the WeChat account “常胖” on 2 November 2026. The text on this page is quoted from the post; the museum photo, screenshots and video poster are from the post and remain the author's copyright."
+        },
+        "href": "https://mp.weixin.qq.com/s/JSUsGMmqGWeNF2DdOIkHbw",
+        "linkLabel": { "zh": "阅读原文", "en": "Read the original post" }
+      },
+      {
+        "label": { "zh": "展项原型", "en": "Original exhibit" },
+        "text": {
+          "zh": "上海天文馆「宇宙」展区的元素周期表灯箱墙与弧形控制台。本站是对该展项交互逻辑的非官方网页复刻，用于科普教学。",
+          "en": "The periodic-table lightbox wall and curved console in the Shanghai Astronomy Museum's “Universe” gallery. This site is an unofficial web recreation of that exhibit's interaction, made for science teaching."
+        }
+      },
+      {
+        "label": { "zh": "源码", "en": "Source code" },
+        "text": {
+          "zh": "Bun + React + TypeScript + Vite，数据与文案均为 JSON，可自行修改后重新构建。",
+          "en": "Bun + React + TypeScript + Vite; all data and copy live in JSON files, ready to edit and rebuild."
+        },
+        "href": "https://github.com/atschx/cosmic-elements-exhibit",
+        "linkLabel": { "zh": "GitHub 仓库", "en": "GitHub repository" }
+      }
+    ]
+  }
+}

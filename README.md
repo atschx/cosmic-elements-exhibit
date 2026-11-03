@@ -3,12 +3,25 @@
 上海天文馆「宇宙元素起源表」互动展陈的网页复刻：一面 118 格的元素灯箱墙，两条机械拉杆，一个会呼吸的玻璃 HUD。
 A web recreation of the Shanghai Astronomy Museum's _Cosmic Nucleosynthesis_ exhibit: a 118-tile lightbox wall, two mechanical levers, and a glass telemetry HUD.
 
-**在线演示 · Live demo:** <https://atschx.github.io/cosmic-elements-exhibit/>
+**在线演示 · Live demo:** <https://atschx.github.io/cosmic-elements-exhibit/>（故事页 · story）→ <https://atschx.github.io/cosmic-elements-exhibit/exhibit/>（展厅 · exhibit）
 
 ![全景一览 · Cosmic Panorama](media/exhibit-v3-normal-1920.png)
 
 v2 把原来的单文件页面重构为 **Bun + React + TypeScript + Vite** 工程：数据与代码分离、组件化、可测试，并新增 **iPad / 手机触屏适配**。视觉与交互与 v1 一比一保持一致。
 v2 rebuilds the former single-file page as a **Bun + React + TypeScript + Vite** project — data separated from code, componentised, tested — and adds **iPad / phone touch support**. Look and behaviour are kept 1:1 with v1.
+
+## 两个页面 · Two pages
+
+站点是一个 Vite 多页面应用（MPA），不依赖客户端路由，因此在没有 SPA 回退的 GitHub Pages 上两条路径都能直接打开：
+The site is a Vite multi-page app (no client-side router), so both paths open directly on GitHub Pages, which has no SPA fallback:
+
+| 路径 · Path | 页面 · Page                                                                                                                                                                                                                                                                                                                                                                                                                                                                | 入口 · Entry                          |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `/`         | **Landing · 故事页** — 讲述这个展项背后的故事（摘自常皓的公众号文章《用 AI 把上海天文馆的周期表，搬回每一个校园》），再以三张小卡介绍展品，并引导访客「进入展厅」。阅读节奏、滚动淡入、`prefers-reduced-motion` 降级、手机优先。<br>**The story page** — why this exhibit exists, quoted from Chang Hao's WeChat article, three cards on what's inside, and the “Enter the exhibit” call to action. Reading rhythm, scroll reveals, reduced-motion fallback, mobile first. | `index.html` → `src/landing/main.tsx` |
+| `/exhibit/` | **Exhibit · 展厅** — 互动展陈本体（下文全部内容）。标题栏右侧有一个不显眼的「← 故事 · Story」返回入口，演示模式下隐藏。<br>**The exhibit** itself (everything below). A quiet “← 故事 · Story” link in the header leads back; it is hidden in presentation mode.                                                                                                                                                                                                           | `exhibit/index.html` → `src/main.tsx` |
+
+故事页的全部文案、配图路径、快捷键表与致谢都在 `src/data/story.json`；配图在 `public/story/`（WebP，单张 ≤ 200 KB），`bun run validate:data` 会检查引用、体积与 alt 文本。`bun run build:single` 只打包展厅，不包含故事页。
+All landing copy, image paths, the shortcut table and credits live in `src/data/story.json`; images are in `public/story/` (WebP, ≤ 200 KB each) and `bun run validate:data` checks references, sizes and alt text. `bun run build:single` packages the exhibit only — the landing page is not part of the single file.
 
 ## 它是什么 · What it is
 
@@ -100,28 +113,39 @@ bun run check               # validate:data + lint + typecheck + format:check
 bun run test                # bun test — 数据模型与 schema 单元测试 · unit tests
 bun run test:e2e            # Playwright 回归（系统 Chrome；自动起 preview 服务器）· e2e regression
 
-bun run build               # → dist/         多文件站点，base=/cosmic-elements-exhibit/
-bun run build:single        # → dist-single/index.html  单文件，零外部请求 · single file, zero requests
-bun run preview             # 预览 dist/ · http://localhost:4173/cosmic-elements-exhibit/
+bun run build               # → dist/         多页面站点（/ 故事页 + /exhibit/ 展厅），base=/cosmic-elements-exhibit/
+bun run build:single        # → dist-single/index.html  仅展厅，单文件，零外部请求 · exhibit only, zero requests
+bun run preview             # 预览 dist/ · http://localhost:4173/cosmic-elements-exhibit/ 与 …/exhibit/
 bun run preview:single      # 预览 dist-single/ · http://localhost:4174/
 ```
 
+开发服务器下两页分别是 `http://localhost:5173/cosmic-elements-exhibit/` 与 `…/cosmic-elements-exhibit/exhibit/`。
+In the dev server the two pages are `http://localhost:5173/cosmic-elements-exhibit/` and `…/cosmic-elements-exhibit/exhibit/`.
+
 ### 两种构建产物 · The two build outputs
 
-| 命令 · Command         | 输出 · Output            | 用途 · Use                                                                                                                         |
-| ---------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `bun run build`        | `dist/`                  | GitHub Pages 站点（`vite.config.ts` 中 `base: '/cosmic-elements-exhibit/'`）· the Pages site, JS/CSS split and hashed              |
-| `bun run build:single` | `dist-single/index.html` | 单个 HTML，内联全部 JS / CSS / 图标，**没有任何外部请求**；双击即可离线运行 · one HTML file with everything inlined, works offline |
+| 命令 · Command         | 输出 · Output            | 用途 · Use                                                                                                                                                                              |
+| ---------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bun run build`        | `dist/`                  | GitHub Pages 站点：`index.html`（故事页）+ `exhibit/index.html`（展厅）+ `story/`（配图），`base: '/cosmic-elements-exhibit/'` · the Pages site: landing + exhibit pages, hashed assets |
+| `bun run build:single` | `dist-single/index.html` | 仅展厅的单个 HTML，内联全部 JS / CSS / 图标，**没有任何外部请求**；双击即可离线运行 · the exhibit as one HTML file with everything inlined, works offline                               |
 
-两者由同一份源码构建，`--mode single` 切换 `base: './'` 与 [`vite-plugin-singlefile`](https://github.com/richardtallent/vite-plugin-singlefile)。
-Both come from the same source; `--mode single` flips `base` to `'./'` and enables `vite-plugin-singlefile`.
+两者由同一份源码构建，`--mode single` 切换 `base: './'`、只保留 `exhibit/index.html` 这一个入口并启用 [`vite-plugin-singlefile`](https://github.com/richardtallent/vite-plugin-singlefile)（构建后把文件提升到 `dist-single/index.html`）。
+Both come from the same source; `--mode single` flips `base` to `'./'`, keeps only the `exhibit/index.html` entry and enables `vite-plugin-singlefile` (the file is then hoisted to `dist-single/index.html`).
 
 ## 目录结构 · Project layout
 
 ```
-index.html                    Vite 入口 · Vite entry (meta, viewport-fit=cover, data-URL favicon)
+index.html                    故事页入口 · landing entry (title / description / Open Graph, og:image = story/og-cover.jpg)
+exhibit/index.html            展厅入口 · exhibit entry (meta, viewport-fit=cover, data-URL favicon)
+public/story/                 故事页配图（WebP ≤ 200 KB）与分享图 · landing images + og cover
 src/
-  main.tsx                    挂载 + 全局样式层叠顺序 · mount + global stylesheet order
+  landing/                    ★ 故事页 · the landing page
+    main.tsx                  挂载（tokens.css + landing.css）· mount
+    Landing.tsx               页面装配 + 来源致谢 · composition + credits
+    components/               TopBar · Hero · StoryBody · ExhibitOverview · Outro（各自带 CSS）
+    useReveal.ts              滚动淡入与分节变色（IntersectionObserver，尊重 reduced-motion）· reveal + accent
+    styles/landing.css        阅读版式：行宽、字号、CTA、页脚 · reading layout, CTA, footer
+  main.tsx                    展厅挂载 + 全局样式层叠顺序 · exhibit mount + global stylesheet order
   App.tsx                     布局模式（wide / stacked / compact）与组件装配 · layout mode & composition
   data/                       ★ 展陈数据（纯 JSON）· exhibit data (plain JSON)
     elements.json             118 种元素：序号、符号、中英名、原子量、电子排布、格位、来源分类、双语叙事
@@ -130,13 +154,14 @@ src/
     domains.json              6 个丰度域及其数据来源 · 6 abundance realms + data source
     abundance/*.json          太阳 log ε 与地壳 / 大气 / 海洋 / 人体 ppm 表 · solar log ε and ppm tables
     essential.json            人体必需元素 · essential-for-life symbols
+    story.json · story.ts     故事页文案（来源、章节、配图、小卡、快捷键、致谢）+ 类型与校验 · landing copy + parser
     types.ts · schema.ts      TS 类型与运行时校验器（应用与 validate:data 共用）· types + runtime parsers
   model/                      派生数据：丰度换算、点亮列表、格式化 · derived data (lit lists, fmtAb, lumOf…)
   state/                      轻量 store（useSyncExternalStore）+ selectors · lightweight store
   audio/                      Web Audio 机械音效引擎 + hook · procedural sound engine
   hooks/                      快捷键、媒体查询、全屏、--vh 同步 · shortcuts, media queries, fullscreen, --vh
   components/
-    Marquee/                  标题栏、打字机副标题、顶部开关与抽屉按钮 · header, typewriter subtitle, toggles
+    Marquee/                  标题栏、打字机副标题、顶部开关、抽屉按钮、「← 故事」返回链接 · header, toggles, story link
     Legend/ · Plaque/         图例面板、纪元铭牌 · legend & epoch plaque panels
     LightboxWall/             灯箱墙 + 3D 翻面 Tile · the wall and its flipping tiles
     ConsoleDeck/              控制台：LCD、拉杆轨道、巡航键 · console deck, lever rails, auto key
@@ -151,7 +176,7 @@ src/
   publicApi.ts                window.CosmicExhibit（讲解员 / 测试用 API）· docent & test API
 scripts/validate-data.ts      数据校验脚本 · data validator
 tests/unit/                   bun test 单元测试 · unit tests
-tests/e2e/                    Playwright 回归（桌面 ×3、单文件、iPad ×2、iPhone）· e2e regression
+tests/e2e/                    Playwright 回归：展厅（桌面 ×2、单文件、iPad ×2、iPhone）+ 故事页（1920 / 1366 / iPad 竖屏 / iPhone）· e2e regression
 legacy/index.html             v1 单文件版本，仅作归档，不参与部署 · the v1 single file, archived, not deployed
 .github/workflows/pages.yml   CI：校验 → lint/typecheck → 测试 → 构建 → 部署 dist/ + 上传单文件产物
 ```
@@ -169,15 +194,18 @@ All exhibit content lives in `src/data/*.json`; run `bun run validate:data` afte
   **Abundances** — keyed by symbol: solar / universe as log ε (converted using X_H and He ppm from `domains.json`), the rest as ppm by mass.
 - **校验规则** — 118 个元素、序号 / 符号 / 格位无重复、字段齐全、每个丰度域质量分数之和落在 99.8 – 100.3 %（地壳在 `domains.json` 中用 `sumRange` 放宽到 100.35 %，并以 `sumNote` 说明 CRC 数据逐项取整的来源）。
   **Validation** — 118 elements, no duplicate Z / symbol / grid cell, all fields present, every realm's mass fractions sum to 99.8 – 100.3 % (the crust widens this via `sumRange` to 100.35 % with a `sumNote` explaining the CRC rounding).
+- **故事页文案** — `story.json`：`source`（原文标题 / 作者 / 公众号 / 日期 / 链接）、`hero`、`sections[]`（每节 `accent` 选用一种核合成过程的颜色，`blocks[]` 支持 `p` / `quote` / `list` / `elements` / `figure` / `video`，正文中 `**…**` 表示强调）、`exhibit.cards`、`shortcuts`、`credits`。配图放进 `public/story/` 并在 JSON 中写明 `width` / `height` / `alt`。
+  **Landing copy** — `story.json`: `source`, `hero`, `sections[]` (each with an `accent` furnace colour and `blocks[]` of type `p` / `quote` / `list` / `elements` / `figure` / `video`; `**…**` marks emphasis), `exhibit.cards`, `shortcuts`, `credits`. Drop images into `public/story/` and declare `width` / `height` / `alt` in the JSON.
 
 ## 质量 · Quality
 
 - TypeScript `strict` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes`；ESLint flat config（typescript-eslint `strictTypeChecked`、react-hooks、jsx-a11y）；Prettier。
 - 可访问性：格子、图例、刻度都是真正的 `<button>`；拉杆是 `role="slider"`（方向键 / Home / End）；HUD 为 `role="dialog"`；`:focus-visible` 样式；`prefers-reduced-motion` 降级。
   Accessibility: tiles, legend items and tick labels are real `<button>`s; levers are `role="slider"`; the HUD is a `role="dialog"`; focus-visible styling; reduced-motion fallback.
-- Lighthouse（桌面，`dist/` 预览）：Performance 100 · Accessibility 100 · Best Practices 100 · SEO 100。
-- Playwright 回归覆盖：118 格、8 档点亮数 2/23/4/22/3/36/28/118、6 域点亮数 83/83/90/12/62/60、全部快捷键、拉杆拖拽、HUD、演示模式、零控制台报错、单文件版本零外部请求，以及 iPad / iPhone 的抽屉、底部面板、触控拖拽与 44 px 触控目标。
-  Playwright covers: 118 tiles, lit counts per notch and realm, every shortcut, lever drag, HUD, presentation mode, zero console errors, zero external requests for the single file, and drawers / bottom sheet / touch drag / 44 px targets on iPad & iPhone.
+- Lighthouse（桌面，`dist/` 预览）：展厅与故事页均为 Performance 100 · Accessibility 100 · Best Practices 100 · SEO 100。
+  Lighthouse (desktop, `dist/` preview): 100 / 100 / 100 / 100 for both the exhibit and the landing page.
+- Playwright 回归覆盖：118 格、8 档点亮数 2/23/4/22/3/36/28/118、6 域点亮数 83/83/90/12/62/60、全部快捷键、拉杆拖拽、HUD、演示模式、零控制台报错、单文件版本零外部请求，以及 iPad / iPhone 的抽屉、底部面板、触控拖拽与 44 px 触控目标；故事页：章节 / 配图 / 致谢渲染、图片尺寸与懒加载、行宽 ≤ 36 字、CTA 进入展厅与「← 故事」返回、元数据、零报错零外链、触控目标、reduced-motion。
+  Playwright covers: 118 tiles, lit counts per notch and realm, every shortcut, lever drag, HUD, presentation mode, zero console errors, zero external requests for the single file, drawers / bottom sheet / touch drag / 44 px targets on iPad & iPhone; and for the landing page: sections / figures / credits, image sizing and lazy loading, a ≤ 36-character measure, CTA into the exhibit and the “← Story” link back, metadata, zero errors / external requests, touch targets, reduced motion.
 
 ## 部署到 GitHub Pages · Deploy
 

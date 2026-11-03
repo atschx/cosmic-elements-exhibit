@@ -3,6 +3,7 @@ import { useExhibit, useExhibitStore } from '@/state/hooks';
 import { activeTag } from '@/state/selectors';
 
 import './Marquee.css';
+import { HAS_LANDING, StoryLink } from './StoryLink';
 import { Subtitle } from './Subtitle';
 
 function ObservatoryIcon() {
@@ -81,6 +82,7 @@ export function Marquee() {
       </div>
 
       <div className="top-controls">
+        {HAS_LANDING ? <StoryLink /> : null}
         <button
           type="button"
           className={`toggle drawer-tab${drawer === 'plaque' ? ' on' : ''}`}
@@ -190,6 +192,7 @@ export function Marquee() {
           <i className={`led ${muted ? 'off' : 'on'}`} id="ledAudio" />
         </button>
       </div>
+      {HAS_LANDING ? <StoryLink row /> : null}
     </header>
   );
 }

@@ -2,13 +2,16 @@ import { defineConfig } from '@playwright/test';
 
 /**
  * End-to-end regression against both production outputs:
- *   - `dist`         multi-file site served under /cosmic-elements-exhibit/ (GitHub Pages layout)
- *   - `dist-single`  the self-contained single HTML file served from /
- * plus touch-emulated tablet / phone projects against the multi-file build.
+ *   - `dist`         multi-page site served under /cosmic-elements-exhibit/ (GitHub Pages layout):
+ *                      /          the landing page (story)      → landing.spec.ts
+ *                      /exhibit/  the interactive exhibit       → exhibit.spec.ts, mobile.spec.ts
+ *   - `dist-single`  the self-contained single HTML file of the exhibit served from /
+ * plus touch-emulated tablet / phone projects against the multi-page build.
  *
  * Uses the system Chrome (`channel: 'chrome'`) so no browser download is needed in CI.
  */
-const DIST_URL = 'http://localhost:4173/cosmic-elements-exhibit/';
+const SITE_URL = 'http://localhost:4173/cosmic-elements-exhibit/';
+const EXHIBIT_URL = `${SITE_URL}exhibit/`;
 const SINGLE_URL = 'http://localhost:4174/';
 
 const chrome = {
@@ -17,6 +20,7 @@ const chrome = {
     args: ['--autoplay-policy=no-user-gesture-required', '--no-sandbox'],
   },
 };
+const touch = { hasTouch: true, isMobile: true };
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -33,59 +37,63 @@ export default defineConfig({
     colorScheme: 'dark',
   },
   projects: [
+    /* ---------- exhibit ---------- */
     {
       name: 'dist-desktop',
-      testIgnore: /mobile\.spec\.ts/,
-      use: { ...chrome, baseURL: DIST_URL, viewport: { width: 1920, height: 1080 } },
+      testMatch: /exhibit\.spec\.ts/,
+      use: { ...chrome, baseURL: EXHIBIT_URL, viewport: { width: 1920, height: 1080 } },
     },
     {
       name: 'single-desktop',
-      testIgnore: /mobile\.spec\.ts/,
+      testMatch: /exhibit\.spec\.ts/,
       use: { ...chrome, baseURL: SINGLE_URL, viewport: { width: 1920, height: 1080 } },
     },
     {
       name: 'dist-laptop',
       testMatch: /exhibit\.spec\.ts/,
-      use: { ...chrome, baseURL: DIST_URL, viewport: { width: 1366, height: 768 } },
+      use: { ...chrome, baseURL: EXHIBIT_URL, viewport: { width: 1366, height: 768 } },
     },
     {
       name: 'ipad-landscape',
       testMatch: /mobile\.spec\.ts/,
-      use: {
-        ...chrome,
-        baseURL: DIST_URL,
-        viewport: { width: 1024, height: 768 },
-        hasTouch: true,
-        isMobile: true,
-      },
+      use: { ...chrome, ...touch, baseURL: EXHIBIT_URL, viewport: { width: 1024, height: 768 } },
     },
     {
       name: 'ipad-portrait',
       testMatch: /mobile\.spec\.ts/,
-      use: {
-        ...chrome,
-        baseURL: DIST_URL,
-        viewport: { width: 768, height: 1024 },
-        hasTouch: true,
-        isMobile: true,
-      },
+      use: { ...chrome, ...touch, baseURL: EXHIBIT_URL, viewport: { width: 768, height: 1024 } },
     },
     {
       name: 'iphone',
       testMatch: /mobile\.spec\.ts/,
-      use: {
-        ...chrome,
-        baseURL: DIST_URL,
-        viewport: { width: 390, height: 844 },
-        hasTouch: true,
-        isMobile: true,
-      },
+      use: { ...chrome, ...touch, baseURL: EXHIBIT_URL, viewport: { width: 390, height: 844 } },
+    },
+    /* ---------- landing page ---------- */
+    {
+      name: 'landing-desktop',
+      testMatch: /landing\.spec\.ts/,
+      use: { ...chrome, baseURL: SITE_URL, viewport: { width: 1920, height: 1080 } },
+    },
+    {
+      name: 'landing-laptop',
+      testMatch: /landing\.spec\.ts/,
+      use: { ...chrome, baseURL: SITE_URL, viewport: { width: 1366, height: 768 } },
+    },
+    {
+      name: 'landing-ipad-portrait',
+      testMatch: /landing\.spec\.ts/,
+      use: { ...chrome, ...touch, baseURL: SITE_URL, viewport: { width: 768, height: 1024 } },
+    },
+    {
+      name: 'landing-iphone',
+      testMatch: /landing\.spec\.ts/,
+      use: { ...chrome, ...touch, baseURL: SITE_URL, viewport: { width: 390, height: 844 } },
     },
   ],
   webServer: [
     {
       command: 'bun run preview',
-      url: DIST_URL,
+      url: SITE_URL,
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
     },
