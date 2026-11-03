@@ -1,0 +1,264 @@
+.wall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  position: relative;
+}
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(18, var(--tile));
+  grid-template-rows: repeat(7, var(--tile)) calc(var(--tile) * 0.32) repeat(2, var(--tile));
+  gap: var(--gap);
+  padding: calc(var(--tile) * 0.24);
+  background: linear-gradient(180deg, #11161e, #080b10);
+  border: 1px solid #1a212c;
+  border-radius: 14px;
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.75),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 0 60px rgba(0, 0, 0, 0.85);
+}
+/* Ignition sweep: a bar of stage colour races from the console up the wall */
+.sweep {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  height: 2px;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, var(--stage-color), transparent);
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(0.5px);
+  animation: sweep 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+@keyframes sweep {
+  0% {
+    bottom: 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    bottom: 100%;
+    opacity: 0;
+  }
+}
+
+.ph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px dashed #2c3848;
+  color: #6b7889;
+  font-size: calc(var(--tile) * 0.14);
+  line-height: 1.3;
+  text-align: center;
+  font-family: var(--mono);
+}
+
+/* ---------- Lightbox tiles ---------- */
+.tile {
+  position: relative;
+  background: var(--bezel);
+  border-radius: 6px;
+  padding: calc(var(--tile) * 0.055);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.045),
+    inset 0 2px 5px rgba(0, 0, 0, 0.7),
+    0 1px 0 rgba(255, 255, 255, 0.02);
+  perspective: 520px;
+  cursor: pointer;
+  --stage-color: #94a3b8;
+  /* reset <button> chrome: the bezel is the control */
+  border: 0;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  appearance: none;
+}
+.tile[data-cat='big-bang'] {
+  --stage-color: var(--c-big-bang);
+}
+.tile[data-cat='cosmic-rays'] {
+  --stage-color: var(--c-cosmic-rays);
+}
+.tile[data-cat='low-mass-stars'] {
+  --stage-color: var(--c-low-mass-stars);
+}
+.tile[data-cat='massive-stars'] {
+  --stage-color: var(--c-massive-stars);
+}
+.tile[data-cat='white-dwarfs'] {
+  --stage-color: var(--c-white-dwarfs);
+}
+.tile[data-cat='neutron-star-mergers'] {
+  --stage-color: var(--c-neutron-star-mergers);
+}
+.tile[data-cat='human-synthesis'] {
+  --stage-color: var(--c-human-synthesis);
+}
+
+.card {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(180deg) scale(0.96);
+  transition: transform 0.72s cubic-bezier(0.2, 0.8, 0.25, 1);
+  will-change: transform;
+}
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  backface-visibility: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  padding: calc(var(--tile) * 0.06) calc(var(--tile) * 0.08);
+  line-height: 1;
+}
+.face.back {
+  transform: rotateY(180deg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.6);
+  color: #cbd5e1;
+  place-items: center;
+  grid-template-rows: 1fr;
+}
+.face.back .sym {
+  opacity: 0.18;
+  font-size: calc(var(--tile) * 0.3);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.face.back .z {
+  position: absolute;
+  top: calc(var(--tile) * 0.07);
+  left: calc(var(--tile) * 0.09);
+  opacity: 0.18;
+  font-size: calc(var(--tile) * 0.14);
+  font-family: var(--mono);
+}
+
+.face.front {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02)),
+    color-mix(in srgb, var(--stage-color) calc(8% + 22% * var(--lum)), #0b1018);
+  border: 1px solid color-mix(in srgb, var(--stage-color) calc(30% + 45% * var(--lum)), transparent);
+  color: rgba(255, 255, 255, calc(0.5 + 0.5 * var(--lum)));
+  text-shadow: 0 0 10px color-mix(in srgb, var(--stage-color) calc(70% * var(--lum)), transparent);
+  transition:
+    box-shadow 0.6s ease,
+    --lum 0.6s ease;
+}
+.face.front .z {
+  font-family: var(--mono);
+  font-size: calc(var(--tile) * 0.15);
+  color: color-mix(in srgb, var(--stage-color) 55%, #fff);
+}
+.face.front .sym {
+  align-self: center;
+  justify-self: center;
+  font-size: calc(var(--tile) * 0.36);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.face.front .zh {
+  font-size: calc(var(--tile) * 0.17);
+  text-align: center;
+}
+.face.front .en,
+.face.front .val {
+  font-size: calc(var(--tile) * 0.105);
+  min-height: 1.1em;
+  text-align: center;
+  color: color-mix(in srgb, var(--stage-color) 35%, #fff);
+  letter-spacing: 0.02em;
+  margin-top: calc(var(--tile) * 0.03);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.face.front .val {
+  display: none;
+  font-family: var(--mono);
+  font-size: calc(var(--tile) * 0.115);
+  color: #fff;
+}
+body[data-axis='abundance'] .face.front .en {
+  display: none;
+}
+body[data-axis='abundance'] .face.front .val {
+  display: block;
+}
+/* essential-for-life pulse mark, shown only in the Human-body realm */
+.face.front .ess {
+  display: none;
+  position: absolute;
+  right: calc(var(--tile) * 0.08);
+  top: calc(var(--tile) * 0.08);
+  width: calc(var(--tile) * 0.09);
+  height: calc(var(--tile) * 0.09);
+  border-radius: 50%;
+  background: #fb7185;
+  box-shadow: 0 0 6px #fb7185;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+body[data-realm='human'] .tile.essential .face.front .ess {
+  display: block;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+.tile.lit .card {
+  transform: rotateY(0deg) scale(calc(0.99 + 0.06 * var(--lum)));
+}
+.tile.lit .face.front {
+  box-shadow:
+    0 0 calc(24px * var(--lum)) var(--stage-color),
+    inset 0 0 calc(12px * var(--lum)) var(--stage-color);
+}
+.tile.lit.pinned .card {
+  transform: rotateY(0deg) scale(1.14);
+}
+.tile.lit.pinned {
+  z-index: 6;
+}
+@media (hover: hover) {
+  .tile.lit:hover .card {
+    transform: rotateY(0deg) scale(1.14);
+  }
+  .tile.lit:hover {
+    z-index: 6;
+  }
+  .tile:not(.lit):hover .card {
+    transform: rotateY(180deg) scale(1.02);
+  }
+  .tile:not(.lit):hover .face.back .sym,
+  .tile:not(.lit):hover .face.back .z {
+    opacity: 0.4;
+  }
+}
+
+@media (max-height: 820px), (max-width: 1600px) {
+  .face.front .en {
+    display: none;
+  }
+}

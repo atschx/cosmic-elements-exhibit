@@ -1,12 +1,20 @@
-# Project-store housekeeping — not part of the published repository / site
-/artifacts/
-/internal/
-/notes.md
-/docs/*.zip
-/docs/cosmic-elements-exhibit.html
+# Build output
+dist/
+dist-single/
 
-# OS / editor / tooling
-.DS_Store
-Thumbs.db
+# Dependencies & tooling
 node_modules/
 *.log
+.eslintcache
+
+# Playwright
+test-results/
+playwright-report/
+tests/e2e/__screenshots__/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

@@ -1,0 +1,116 @@
+/* ---------- Presentation mode (P): title + wall + levers only ---------- */
+html.present .lcd,
+html.present .keys,
+html.present .deck-right .btn-row:last-child,
+html.present .key .lbl small {
+  display: none;
+}
+html.present .deck-left {
+  justify-content: center;
+}
+
+/* ---------- Responsive tiers: ≤1600 (intermediate) → ≤1500 (compact) → ≤1180 (wall only) ---------- */
+@media (max-width: 1600px) {
+  .deck {
+    grid-template-columns: minmax(240px, 0.8fr) minmax(0, 3.4fr) minmax(240px, 0.8fr);
+    gap: 18px;
+    padding: 15px 24px 13px;
+  }
+  .deck-left .btn-row .key,
+  .deck-right .btn-row .key {
+    padding: 10px 10px;
+    gap: 7px;
+  }
+  .key .lbl small {
+    display: none;
+  }
+  .tick-lbl .en {
+    display: none;
+  }
+  .rail-ticks {
+    height: 42px;
+  }
+  .bracket {
+    top: 24px;
+  }
+  .legend-item {
+    padding: 6px 8px;
+  }
+  .hud {
+    width: 300px;
+  }
+}
+@media (max-width: 1500px) {
+  .deck {
+    grid-template-columns: minmax(192px, 0.5fr) minmax(0, 4.2fr) minmax(210px, 0.7fr);
+    gap: 16px;
+    padding: 14px 20px 12px;
+  }
+  .deck .lcd {
+    display: none;
+  }
+  .deck-left .btn-row .key,
+  .deck-right .btn-row .key {
+    padding: 10px 8px;
+    gap: 6px;
+  }
+  .key.has-ring {
+    padding-left: 22px;
+  }
+  .key.auto .lbl {
+    display: none;
+  }
+  .tick-lbl {
+    font-size: var(--fs-xs);
+  }
+}
+@media (max-height: 820px) {
+  .legend-item {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+  .legend-item .zh {
+    font-size: var(--fs-base);
+  }
+  .ab-scale {
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+  .scale-hint {
+    display: none;
+  }
+  .keys {
+    display: none;
+  }
+}
+@media (max-width: 1180px) {
+  :root {
+    --panel-w: 0px;
+    --header-h: 80px;
+  }
+  .stage > .panel {
+    display: none;
+  }
+  .marquee {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .badge span,
+  .badge b {
+    display: none;
+  }
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .deck {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+  .deck-left .lcd,
+  .deck-right .btn-row:last-child {
+    display: none;
+  }
+  .tick-lbl .en {
+    display: none;
+  }
+}

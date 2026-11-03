@@ -1,0 +1,199 @@
+/* ---------- Museum marquee ---------- */
+.marquee {
+  display: grid;
+  /* equal side columns keep the title centred; the control cluster adapts to its column via a container query */
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 26px 0;
+}
+/* Control cluster degrades with its column: 中文 + English → 中文 only → icon + key only */
+.top-controls {
+  container-type: inline-size;
+}
+.toggle .lbl {
+  display: inline-flex;
+  gap: 0.45em;
+}
+.toggle .lbl .en {
+  color: var(--muted);
+}
+.toggle .lbl .en::before {
+  content: '/';
+  margin-right: 0.45em;
+  color: var(--dim);
+}
+@container (max-width: 620px) {
+  .toggle .lbl .en {
+    display: none;
+  }
+}
+@container (max-width: 350px) {
+  .toggle .lbl {
+    display: none;
+  }
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: var(--fs-md);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.badge svg {
+  width: 36px;
+  height: 36px;
+  color: var(--stage-color);
+  filter: drop-shadow(0 0 8px var(--stage-color));
+  transition: color 0.9s ease;
+}
+.badge b {
+  display: block;
+  color: var(--txt);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  font-size: var(--fs-base);
+}
+.badge span {
+  display: block;
+  margin-top: 3px;
+}
+
+.title {
+  text-align: center;
+  min-width: 0;
+}
+.title h1 {
+  margin: 0;
+  font-size: clamp(15px, 1.35vw, 23px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 24px color-mix(in srgb, var(--stage-color) 50%, transparent);
+}
+.title h1 .sep {
+  color: var(--stage-color);
+  margin: 0 0.35em;
+}
+.title h1 .en {
+  font-weight: 500;
+  color: #c3ccd8;
+  letter-spacing: 0.03em;
+}
+/* One-line subtitle: 中文 types in, then zh / en alternate with a vertical fade-roll */
+.subtitle {
+  position: relative;
+  margin: 5px auto 0;
+  max-width: 1100px;
+  font-size: clamp(11px, 0.95vw, 15px);
+  line-height: 1.45;
+  height: 1.45em;
+  overflow: hidden;
+  color: var(--muted);
+}
+.subtitle .zh,
+.subtitle .en {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s cubic-bezier(0.3, 0.8, 0.3, 1);
+}
+.subtitle .zh {
+  color: #d7dee8;
+}
+.subtitle .en {
+  font-style: italic;
+  opacity: 0;
+  transform: translateY(110%);
+}
+.subtitle.show-en .zh {
+  opacity: 0;
+  transform: translateY(-110%);
+}
+.subtitle.show-en .en {
+  opacity: 1;
+  transform: none;
+}
+.subtitle .cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  vertical-align: -0.15em;
+  background: var(--stage-color);
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.top-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px 7px 9px;
+  background: linear-gradient(180deg, #171e2a, #0d121a);
+  border: 1px solid #222b38;
+  border-radius: 8px;
+  color: #c8d1dc;
+  font-size: var(--fs-md);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow:
+    0 2px 0 #04060a,
+    0 6px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s,
+    border-color 0.3s;
+}
+@media (hover: hover) {
+  .toggle:hover {
+    border-color: #334155;
+  }
+}
+.toggle:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 0 0 #04060a,
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.toggle svg {
+  width: 16px;
+  height: 16px;
+}
+.toggle kbd {
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  padding: 1px 5px;
+  border: 1px solid #3a4656;
+  border-radius: 4px;
+  color: #e2e8f0;
+  background: #0a0e14;
+}
+/* Compact-layout drawer tabs (legend / plaque) — hidden on wide screens, see styles/mobile.css */
+.toggle.drawer-tab {
+  display: none;
+}

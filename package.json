@@ -1,0 +1,48 @@
+{
+  "name": "cosmic-elements-exhibit",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "上海天文馆「宇宙元素起源表」互动展陈复刻 · Shanghai Astronomy Museum: Cosmic Nucleosynthesis — bilingual interactive exhibit (React + TypeScript + Vite, built with Bun).",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:single": "vite build --mode single",
+    "preview": "vite preview",
+    "preview:single": "vite preview --mode single --outDir dist-single",
+    "validate:data": "bun run scripts/validate-data.ts",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "bun test tests/unit",
+    "test:e2e": "playwright test",
+    "check": "bun run validate:data && bun run lint && bun run typecheck && bun run format:check"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
+    "@types/bun": "^1.4.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "typescript": "6",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.5",
+    "vite-plugin-singlefile": "^2.3.4"
+  },
+  "engines": {
+    "bun": ">=1.2"
+  }
+}

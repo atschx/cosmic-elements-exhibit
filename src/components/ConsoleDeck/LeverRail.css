@@ -1,0 +1,280 @@
+.rail-block {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+.rail-block + .rail-block::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, #2a3442, transparent);
+}
+.rail-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.rail-label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.4s;
+}
+.rail-label span b {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #8e9bab;
+  margin-right: 8px;
+  transition:
+    color 0.4s,
+    text-shadow 0.4s;
+}
+.rail-block.active .rail-label span {
+  color: var(--muted);
+}
+.rail-block.active .rail-label span b {
+  color: var(--stage-color);
+  text-shadow: 0 0 12px var(--stage-color);
+}
+.rail-label em {
+  font-style: normal;
+  font-family: var(--mono);
+  color: var(--dim);
+  transition: color 0.9s;
+  flex: none;
+}
+.rail-block.active .rail-label em {
+  color: var(--stage-color);
+}
+.rail-block:not(.active) .knob-cap::after {
+  background: #3a4656;
+  box-shadow: none;
+}
+.rail-block:not(.active) .groove::after {
+  opacity: 0.3;
+}
+.rail-block:not(.active) .detent.passed,
+.rail-block:not(.active) .detent.active {
+  opacity: 0.45;
+}
+.rail-block:not(.active) .tick-lbl.active {
+  color: #a7b2c0;
+}
+.rail-block:not(.active) .tick-lbl.active b,
+.rail-block:not(.active) .tick-lbl.active .en {
+  color: color-mix(in srgb, var(--c) 55%, #3e4958);
+}
+.bracket {
+  position: absolute;
+  top: 34px;
+  height: 5px;
+  border: 1px solid #2f3b4c;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  pointer-events: none;
+}
+.bracket span {
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  color: #5d6b80;
+}
+.rail {
+  position: relative;
+  height: 56px;
+  margin: 2px var(--rail-inset) 0;
+  touch-action: none;
+  cursor: grab;
+}
+.rail.dragging {
+  cursor: grabbing;
+}
+.groove {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 14px;
+  transform: translateY(-50%);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #03050a, #0c1119);
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, 0.95),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.groove::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  width: var(--fill, 0%);
+  background: linear-gradient(90deg, transparent, var(--stage-color));
+  box-shadow: 0 0 8px var(--stage-color);
+  transition:
+    width 0.55s cubic-bezier(0.3, 0.9, 0.3, 1.05),
+    background 0.9s;
+  border-radius: 2px;
+}
+.rail.dragging .groove::after,
+.rail.immediate .groove::after {
+  transition: none;
+}
+.detent {
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+  background: #222c3a;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6);
+  transition:
+    background 0.3s,
+    box-shadow 0.3s;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+}
+.detent::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  right: -14px;
+  top: -14px;
+  bottom: -14px;
+}
+.detent.passed,
+.detent.active {
+  background: var(--c);
+  box-shadow:
+    0 0 10px var(--c),
+    0 0 0 1px rgba(0, 0, 0, 0.6);
+}
+.detent.active {
+  height: 30px;
+}
+.knob {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 58px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  transition: left 0.55s cubic-bezier(0.3, 0.9, 0.3, 1.05);
+  cursor: grab;
+  z-index: 2;
+}
+.rail.dragging .knob,
+.rail.immediate .knob {
+  transition: none;
+  cursor: grabbing;
+}
+.knob-cap {
+  position: absolute;
+  inset: 0;
+  border-radius: 9px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #3a4556, #1a2130 60%, #0e131b);
+  border: 1px solid #3f4c5f;
+  box-shadow:
+    0 6px 0 #05080c,
+    0 14px 22px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+.knob-cap::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: var(--stage-color);
+  box-shadow:
+    0 0 10px var(--stage-color),
+    0 0 2px #fff;
+  transition:
+    background 0.9s,
+    box-shadow 0.9s;
+}
+.rail.dragging .knob-cap {
+  transform: translateY(3px);
+  box-shadow:
+    0 3px 0 #05080c,
+    0 8px 14px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.5);
+}
+.rail-ticks {
+  position: relative;
+  height: 52px;
+  margin: 0 var(--rail-inset);
+}
+.tick-lbl {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  width: var(--tick-w);
+  font-size: var(--fs-sm);
+  line-height: 1.25;
+  color: #7f8b9b;
+  cursor: pointer;
+  transition: color 0.3s;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+}
+.tick-lbl b {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.12em;
+  color: #556172;
+  margin-bottom: 2px;
+}
+.tick-lbl .en {
+  display: block;
+  font-size: var(--fs-xs);
+  color: #556172;
+  letter-spacing: 0.02em;
+}
+.tick-lbl.active {
+  color: #fff;
+}
+.tick-lbl.active b,
+.tick-lbl.active .en {
+  color: var(--c);
+}
+@media (hover: hover) {
+  .tick-lbl:hover {
+    color: #c8d1dc;
+  }
+}

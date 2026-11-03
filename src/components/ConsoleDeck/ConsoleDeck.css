@@ -1,0 +1,286 @@
+/* ---------- Cockpit console deck ---------- */
+.deck-wrap {
+  position: relative;
+  padding: 0 22px 12px;
+  min-height: 0;
+}
+.deck {
+  position: relative;
+  height: 100%;
+  transform: perspective(800px) rotateX(12deg);
+  transform-origin: 50% 100%;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.85fr) minmax(0, 3.2fr) minmax(220px, 0.85fr);
+  gap: 22px;
+  align-items: center;
+  padding: 16px 28px 14px;
+  border-radius: 18px 18px 10px 10px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #1a2231 0%, #111722 55%, #0b0f16 100%);
+  border: 1px solid #222c3a;
+  border-top-color: color-mix(in srgb, var(--stage-color) 55%, #222c3a);
+  box-shadow:
+    0 -1px 0 color-mix(in srgb, var(--stage-color) 60%, transparent),
+    0 -14px 40px -14px var(--stage-color),
+    0 30px 60px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -30px 50px rgba(0, 0, 0, 0.5);
+  transition:
+    box-shadow 0.9s ease,
+    border-top-color 0.9s ease;
+}
+.deck.fire {
+  box-shadow:
+    0 -2px 0 var(--stage-color),
+    0 -30px 70px -10px var(--stage-color),
+    0 30px 60px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -30px 50px rgba(0, 0, 0, 0.5);
+  transition: none;
+}
+.deck .screw {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4a5668, #1a212c 60%, #05070a);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.deck .screw::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 1px;
+  bottom: 1px;
+  width: 1px;
+  background: #05070a;
+  transform: translateX(-50%) rotate(35deg);
+}
+.screw.tl {
+  left: 10px;
+  top: 10px;
+}
+.screw.tr {
+  right: 10px;
+  top: 10px;
+}
+.screw.bl {
+  left: 10px;
+  bottom: 10px;
+}
+.screw.br {
+  right: 10px;
+  bottom: 10px;
+}
+
+.deck-left,
+.deck-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.deck-right {
+  align-items: stretch;
+}
+.btn-row {
+  display: flex;
+  gap: 10px;
+}
+.btn-row .key {
+  flex: 1;
+}
+
+.lcd {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 14px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #04070b, #080c12);
+  border: 1px solid #1a2330;
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.04);
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.lcd div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.lcd b {
+  color: color-mix(in srgb, var(--stage-color) 70%, #fff);
+  font-weight: 600;
+  text-shadow: 0 0 8px var(--stage-color);
+  transition: color 0.9s;
+}
+.lcd .led {
+  width: 7px;
+  height: 7px;
+}
+
+.key {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 10px;
+  background: linear-gradient(180deg, #1c2431, #10161f);
+  border: 1px solid #27313f;
+  border-radius: 9px;
+  color: #d6dde6;
+  font-size: var(--fs-md);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow:
+    0 3px 0 #04060a,
+    0 8px 16px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition:
+    transform 0.07s,
+    box-shadow 0.07s,
+    border-color 0.25s,
+    background 0.25s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (hover: hover) {
+  .key:hover {
+    border-color: #3b4a5e;
+    background: linear-gradient(180deg, #212a39, #141b25);
+  }
+}
+.key:active,
+.key.pressed {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #04060a,
+    0 3px 8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+.key kbd {
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  padding: 1px 6px;
+  border: 1px solid #3a4656;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  color: #e2e8f0;
+  background: #0a0e14;
+}
+.key .lbl {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+  min-width: 0;
+}
+.key .lbl small {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* English sub-labels drop out when a button column gets too narrow for them (≈ 1600–1800 px wide windows) */
+.deck-left,
+.deck-right {
+  container-type: inline-size;
+}
+@container (max-width: 300px) {
+  .key .lbl small {
+    display: none;
+  }
+}
+.key .ring {
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #1f2a37;
+  box-shadow: inset 0 0 3px #000;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.key.on .ring {
+  border-color: var(--stage-color);
+  box-shadow:
+    0 0 10px var(--stage-color),
+    inset 0 0 4px var(--stage-color);
+}
+.key.has-ring {
+  padding-left: 24px;
+}
+.key svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+.key.auto {
+  padding-left: 12px;
+}
+.key.auto .countdown {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  flex: none;
+}
+.key.auto .countdown svg {
+  position: absolute;
+  inset: 0;
+  width: 34px;
+  height: 34px;
+  transform: rotate(-90deg);
+}
+.key.auto .countdown circle {
+  fill: none;
+  stroke-width: 3;
+}
+.key.auto .countdown .track {
+  stroke: #1f2a37;
+}
+.key.auto .countdown .prog {
+  stroke: var(--stage-color);
+  stroke-linecap: round;
+  stroke-dasharray: 87.96;
+  stroke-dashoffset: 87.96;
+  filter: drop-shadow(0 0 4px var(--stage-color));
+}
+.key.auto .countdown .num {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: var(--fs-md);
+  color: var(--muted);
+}
+.key.auto.on .countdown .num {
+  color: #fff;
+}
+
+/* Two lever rails side by side, as on the museum console: 元素来源 (8 notches) | 元素丰度 (6 notches) */
+.deck-center {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 8fr 6fr;
+  gap: 30px;
+  align-items: start;
+}

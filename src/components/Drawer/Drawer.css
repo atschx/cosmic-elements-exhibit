@@ -1,0 +1,110 @@
+/* ---------- Compact-layout drawers (side panels on tablets / phones) ---------- */
+.drawer-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(2, 4, 8, 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    visibility 0s linear 0.25s;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.drawer-scrim.open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.25s ease,
+    visibility 0s;
+}
+.drawer {
+  position: fixed;
+  top: var(--safe-top);
+  bottom: 0;
+  z-index: 55;
+  width: min(360px, 86vw);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  visibility: hidden;
+  transition:
+    transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s linear 0.32s;
+}
+.drawer.left {
+  left: 0;
+  transform: translateX(-104%);
+  padding-left: var(--safe-left);
+}
+.drawer.right {
+  right: 0;
+  transform: translateX(104%);
+  padding-right: var(--safe-right);
+}
+.drawer.open {
+  visibility: visible;
+  transform: none;
+  transition:
+    transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s;
+}
+.drawer .panel {
+  flex: 1;
+  min-height: 0;
+  border-radius: 0;
+  border-top: 0;
+  border-bottom: 0;
+  overflow: auto;
+  padding-bottom: calc(14px + var(--safe-bottom));
+}
+.drawer .panel .keys {
+  display: none;
+}
+.drawer-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e6edf3;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.drawer.left .drawer-close {
+  right: 8px;
+}
+/* Phones: drawers rise from the bottom as sheets instead of sliding in from the sides */
+@media (max-width: 640px) {
+  .drawer,
+  .drawer.left,
+  .drawer.right {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    max-height: min(78vh, calc(var(--vh) - 48px));
+    transform: translateY(104%);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .drawer.open {
+    transform: none;
+  }
+  .drawer .panel {
+    border-radius: 18px 18px 0 0;
+    border-top: 1px solid #1c2531;
+  }
+}

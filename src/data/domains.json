@@ -1,0 +1,133 @@
+[
+  {
+    "key": "universe",
+    "nameZh": "宇宙",
+    "nameEn": "Universe",
+    "color": "#c4b5fd",
+    "hum": 49,
+    "readout": "H+He ≈ 98%",
+    "unitZh": "质量分数 · 以太阳成分标定",
+    "unitEn": "mass fraction, solar-scaled",
+    "tagZh": "放眼宇宙，98% 的普通物质仍是大爆炸留下的氢与氦。",
+    "tagEn": "Across the cosmos, 98% of ordinary matter is still the hydrogen and helium the Big Bang left behind.",
+    "narrativeZh": "138 亿年的恒星劳作，只把宇宙普通物质的约 2% 变成了比氦更重的「金属」。氧、碳、氖、铁、氮依次领跑；越往周期表右下角，灯箱越暗——每向右一格，往往就稀少十倍。灯箱亮度正比于丰度的对数。",
+    "narrativeEn": "Thirteen point eight billion years of stellar labour have converted only about 2% of the universe's ordinary matter into 'metals' heavier than helium. Oxygen, carbon, neon, iron and nitrogen lead the pack; toward the lower right of the table the lightboxes fade—each step is often ten times rarer. Lightbox glow scales with the logarithm of abundance.",
+    "starZh": "宇宙的配方，开头两行就写完了 98%。",
+    "starEn": "The universe's recipe is 98% written in its first two lines.",
+    "source": {
+      "type": "logeps",
+      "table": "solar-logeps",
+      "xH": 0.735,
+      "heliumPpm": 250300,
+      "offset": 0
+    }
+  },
+  {
+    "key": "solar",
+    "nameZh": "太阳系",
+    "nameEn": "Solar system",
+    "color": "#fbbf24",
+    "hum": 55,
+    "readout": "H+He ≈ 98.6%",
+    "unitZh": "质量分数 · 原太阳星云",
+    "unitEn": "mass fraction, protosolar nebula",
+    "tagZh": "太阳占据太阳系 99.86% 的质量——太阳系的配方，几乎就写在太阳里。",
+    "tagEn": "The Sun holds 99.86% of the Solar System's mass—its recipe is all but written in the Sun.",
+    "narrativeZh": "太阳光谱里的每一条暗线，都是一种元素在报到。读不出的部分，由 46 亿年前凝固的陨石补全：铅、金、铀……太阳系比今日宇宙平均略「富金属」——它诞生在一个已被好几代恒星施肥过的银河角落。",
+    "narrativeEn": "Every dark line in the Sun's spectrum is an element reporting for duty; what the spectrum cannot read, meteorites frozen 4.6 billion years ago fill in—lead, gold, uranium. The Solar System is slightly richer in metals than the cosmic average: it was born in a corner of the Galaxy already fertilised by generations of stars.",
+    "starZh": "读懂太阳光谱，就读懂了我们的来处。",
+    "starEn": "Read the Sun's spectrum and you read where we came from.",
+    "source": {
+      "type": "logeps",
+      "table": "solar-logeps",
+      "xH": 0.7154,
+      "heliumPpm": 270300,
+      "offset": 0.04
+    }
+  },
+  {
+    "key": "crust",
+    "nameZh": "地壳",
+    "nameEn": "Earth's crust",
+    "color": "#d4a373",
+    "hum": 36.7,
+    "readout": "O+Si ≈ 74%",
+    "unitZh": "质量分数 · 大陆地壳",
+    "unitEn": "mass fraction, continental crust",
+    "tagZh": "脚下的岩石：四分之三是氧与硅，几乎所有天然元素都在其中。",
+    "tagEn": "The rock beneath your feet is three-quarters oxygen and silicon—and holds almost every natural element.",
+    "narrativeZh": "地壳是宇宙配方的倒置：氢与氦几乎逃逸殆尽，氧和硅以硅酸盐岩石的形式占据四分之三，铝、铁、钙、钠、镁、钾紧随其后。从金、铂到只以克计存在的砹，几乎每一种天然元素都藏在脚下，只是亮度相差二十个数量级。",
+    "narrativeEn": "The crust inverts the cosmic recipe: hydrogen and helium have all but escaped, while oxygen and silicon, bound into silicate rock, make up three-quarters, followed by aluminium, iron, calcium, sodium, magnesium and potassium. From gold and platinum down to astatine—present only by the gram—nearly every natural element hides underfoot, across twenty orders of magnitude.",
+    "starZh": "地球是一颗被烤干了氢氦的星尘球。",
+    "starEn": "Earth is a ball of starstuff baked dry of hydrogen and helium.",
+    "source": {
+      "type": "ppm",
+      "table": "crust"
+    },
+    "sumRange": [
+      99.8,
+      100.35
+    ],
+    "sumNote": "CRC Handbook crustal values are individually rounded and sum to 100.31% by mass; kept as published rather than renormalised."
+  },
+  {
+    "key": "atmosphere",
+    "nameZh": "大气",
+    "nameEn": "Atmosphere",
+    "color": "#7dd3fc",
+    "hum": 61.7,
+    "readout": "N+O ≈ 98.7%",
+    "unitZh": "质量分数 · 含平均水汽",
+    "unitEn": "mass fraction, incl. mean water vapour",
+    "tagZh": "一口空气：氮、氧、氩，以及左右气候的万分之二碳。",
+    "tagEn": "One breath: nitrogen, oxygen, argon—and the 0.02% of carbon that steers the climate.",
+    "narrativeZh": "大气几乎只由三种元素构成。氮来自大质量恒星，氧是光合作用三十亿年的积累，氩则是地球内部钾-40 衰变 45 亿年的呼出物。二氧化碳里的碳不到万分之二，却左右着整颗行星的温度。",
+    "narrativeEn": "The atmosphere is almost entirely three elements. Nitrogen came from massive stars; oxygen is three billion years of photosynthesis; argon is what Earth's interior has exhaled from potassium-40 decay over 4.5 billion years. The carbon in carbon dioxide is under 0.02%—yet it sets the temperature of the whole planet.",
+    "starZh": "每一次呼吸，你都在吸入超新星与钾-40 的遗产。",
+    "starEn": "Every breath takes in the legacy of supernovae and potassium-40.",
+    "source": {
+      "type": "ppm",
+      "table": "atmosphere"
+    }
+  },
+  {
+    "key": "ocean",
+    "nameZh": "海洋",
+    "nameEn": "Ocean",
+    "color": "#2dd4bf",
+    "hum": 41.2,
+    "readout": "H+O ≈ 96.5%",
+    "unitZh": "质量分数 · 标准海水",
+    "unitEn": "mass fraction, standard seawater",
+    "tagZh": "海水 96.5% 是氢与氧，剩下的味道来自氯与钠。",
+    "tagEn": "Seawater is 96.5% hydrogen and oxygen; the taste is chlorine and sodium.",
+    "narrativeZh": "海洋是一杯 1.3×10¹⁸ 吨的稀溶液：96.5% 是水，3.5% 是盐——氯与钠为主，镁、硫、钙、钾随后。全球海水中溶解着约两千万吨黄金，却稀薄到每吨海水只有 4 纳克，无人能采。",
+    "narrativeEn": "The ocean is a 1.3×10¹⁸-tonne dilute solution: 96.5% water, 3.5% salt—mostly chlorine and sodium, then magnesium, sulfur, calcium and potassium. Some twenty million tonnes of gold are dissolved in the world's seas, yet at four nanograms per tonne no one can mine it.",
+    "starZh": "海的咸味，是大质量恒星留下的氯与钠。",
+    "starEn": "The sea tastes of chlorine and sodium left by massive stars.",
+    "source": {
+      "type": "ppm",
+      "table": "ocean"
+    }
+  },
+  {
+    "key": "human",
+    "nameZh": "人体",
+    "nameEn": "Human body",
+    "color": "#fb7185",
+    "hum": 46.2,
+    "readout": "O+C+H+N ≈ 96%",
+    "unitZh": "质量分数 · 70 kg 成人",
+    "unitEn": "mass fraction, 70 kg adult",
+    "tagZh": "你的身体：96% 是氧、碳、氢、氮——全部都是星尘。",
+    "tagEn": "Your body: 96% oxygen, carbon, hydrogen and nitrogen—all of it starstuff.",
+    "narrativeZh": "一个 70 kg 的人：氧、碳、氢、氮占 96%，钙与磷撑起骨骼，钾、钠、氯传导神经。其余几十种痕量元素里，有的必不可少（铁、锌、碘、硒，以脉冲标记），有的只是尘世的过客——铅、铀，甚至 31 皮克的镭。",
+    "narrativeEn": "A 70 kg person: oxygen, carbon, hydrogen and nitrogen make up 96%; calcium and phosphorus hold up the skeleton; potassium, sodium and chlorine carry every nerve impulse. Among dozens of trace elements, some are essential (iron, zinc, iodine, selenium—marked with a pulse) and some are mere passengers—lead, uranium, even 31 picograms of radium.",
+    "starZh": "我们由星尘铸成。",
+    "starEn": "We are made of starstuff.",
+    "source": {
+      "type": "ppm",
+      "table": "human"
+    }
+  }
+]
