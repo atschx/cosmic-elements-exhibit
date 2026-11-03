@@ -293,13 +293,42 @@ html.present .stage.stacked .wall {
     display: none;
   }
   .subtitle {
-    grid-column: 1 / -1;
+    grid-column: 2 / -1;
     grid-row: 2;
     margin: 0;
     width: 100%;
     font-size: 11px;
     max-width: none;
     text-align: center;
+  }
+  /* the control cluster is full on phones, so the story link moves to the subtitle row:
+     a 44 px hit area whose lower part hangs into the stage padding (margin-bottom) */
+  .top-controls .story-link {
+    display: none;
+  }
+  .story-link-row {
+    position: relative;
+    z-index: 2;
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    min-height: 44px;
+    margin-bottom: -26px;
+    padding: 1px 8px 0 0;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .story-link-row svg {
+    width: 14px;
+    height: 14px;
+  }
+  .story-link-row .lbl .en {
+    display: none;
   }
   .toggle {
     padding: 6px 8px;
