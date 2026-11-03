@@ -3,8 +3,7 @@
 上海天文馆「宇宙元素起源表」互动展陈的网页复刻：一面 118 格的元素灯箱墙，两条机械拉杆，一个会呼吸的玻璃 HUD。
 A web recreation of the Shanghai Astronomy Museum's *Cosmic Nucleosynthesis* exhibit: a 118-tile lightbox wall, two mechanical levers, and a glass telemetry HUD.
 
-**在线演示 · Live demo:** `https://<your-github-username>.github.io/<repo-name>/`
-（推送到 GitHub 并启用 Pages 后，将此处替换为真实地址 · replace after the first deployment）
+**在线演示 · Live demo:** <https://atschx.github.io/cosmic-elements-exhibit/>
 
 ![全景一览 · Cosmic Panorama](media/exhibit-v3-normal-1920.png)
 
