@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
 import type { CosmicExhibitApi } from '@/publicApi';
 
@@ -76,13 +76,29 @@ export async function expectSnapshot(page: Page, part: Partial<Snapshot>): Promi
     .toEqual(part);
 }
 
+/** Bounding box once the element has stopped moving (the knob glides for 550 ms after a commit). */
+async function settledBox(
+  locator: Locator,
+): Promise<{ x: number; y: number; width: number; height: number }> {
+  let prev = await locator.boundingBox();
+  for (let i = 0; i < 20; i++) {
+    await locator.page().waitForTimeout(80);
+    const next = await locator.boundingBox();
+    if (prev && next && Math.abs(prev.x - next.x) < 0.5 && Math.abs(prev.y - next.y) < 0.5)
+      return next;
+    prev = next;
+  }
+  if (!prev) throw new Error('element never laid out');
+  return prev;
+}
+
 /** Drag a lever knob horizontally with the mouse to the given fraction of its rail (0 … 1). */
 export async function dragKnob(page: Page, railId: string, toFraction: number): Promise<void> {
   const knob = page.locator(`#${railId} .knob`);
   const rail = page.locator(`#${railId} .rail`);
-  const kb = await knob.boundingBox();
+  const kb = await settledBox(knob);
   const rb = await rail.boundingBox();
-  if (!kb || !rb) throw new Error(`rail ${railId} not laid out`);
+  if (!rb) throw new Error(`rail ${railId} not laid out`);
   const sx = kb.x + kb.width / 2;
   const sy = kb.y + kb.height / 2;
   const tx = rb.x + rb.width * toFraction;
@@ -90,17 +106,19 @@ export async function dragKnob(page: Page, railId: string, toFraction: number): 
   await page.mouse.down();
   for (let i = 1; i <= 10; i++) {
     await page.mouse.move(sx + ((tx - sx) * i) / 10, sy);
+    await page.waitForTimeout(16);
   }
   await page.mouse.up();
+  await page.waitForTimeout(50);
 }
 
 /** Same as dragKnob, but with a synthetic touch sequence (CDP) for the touch projects. */
 export async function touchDragKnob(page: Page, railId: string, toFraction: number): Promise<void> {
   const knob = page.locator(`#${railId} .knob`);
   const rail = page.locator(`#${railId} .rail`);
-  const kb = await knob.boundingBox();
+  const kb = await settledBox(knob);
   const rb = await rail.boundingBox();
-  if (!kb || !rb) throw new Error(`rail ${railId} not laid out`);
+  if (!rb) throw new Error(`rail ${railId} not laid out`);
   const sx = kb.x + kb.width / 2;
   const sy = kb.y + kb.height / 2;
   const tx = rb.x + rb.width * toFraction;
@@ -113,7 +131,10 @@ export async function touchDragKnob(page: Page, railId: string, toFraction: numb
   await send('touchStart', sx, sy);
   for (let i = 1; i <= 10; i++) {
     await send('touchMove', sx + ((tx - sx) * i) / 10, sy);
+    // give the pointer-capture handler a frame per step, as a real finger would
+    await page.waitForTimeout(16);
   }
   await send('touchEnd', 0, 0);
   await cdp.detach();
+  await page.waitForTimeout(50);
 }

@@ -304,7 +304,8 @@ test.describe('quality gates', () => {
     await expect(page.locator('h1')).toContainText('宇宙元素起源表');
     await expect(page.locator('#grid[role="group"]')).toBeVisible();
     await expect(page.locator('[role="slider"]')).toHaveCount(2);
-    await expect(page.locator('.tile[aria-label]')).toHaveCount(118);
+    await expect(page.locator('.tile[data-z="1"]')).toHaveAccessibleName(/1\s*H\s*氢\s*Hydrogen/);
+    await expect(page.locator('.tile[data-z="79"]')).toHaveAccessibleName(/79\s*Au\s*金/);
     const unnamed = await page
       .locator('button')
       .evaluateAll((els) =>

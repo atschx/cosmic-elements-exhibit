@@ -57,7 +57,6 @@ export const Tile = memo(function Tile({
           '--lum': lum.toFixed(3),
         } as React.CSSProperties
       }
-      aria-label={`${z} ${el.nameZh} ${el.nameEn}`}
       aria-pressed={pinned}
       onClick={() => onActivate(z)}
       onPointerEnter={(e: PointerEvent<HTMLButtonElement>) => {
@@ -68,11 +67,13 @@ export const Tile = memo(function Tile({
       }}
     >
       <span className="card" style={{ transitionDelay: `${delay}ms` }}>
+        {/* the dormant face is drawn from data attributes so the button's accessible name
+            (derived from the lit face: "1 H 氢 Hydrogen [65%]") is not duplicated */}
         <span className="face back" aria-hidden="true">
-          <span className="z">{z}</span>
-          <span className="sym">{el.symbol}</span>
+          <span className="z" data-t={z} />
+          <span className="sym" data-t={el.symbol} />
         </span>
-        <span className="face front" aria-hidden="true">
+        <span className="face front">
           <span className="z">{z}</span>
           <span className="sym">{el.symbol}</span>
           <span className="zh">{zhDisplay(el)}</span>

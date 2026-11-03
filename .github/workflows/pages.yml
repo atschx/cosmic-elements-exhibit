@@ -1,10 +1,12 @@
-name: Deploy to GitHub Pages
+name: Build & deploy to GitHub Pages
 
-# The exhibit is a single self-contained HTML file in docs/ — there is nothing to build,
-# so the job just uploads docs/ as the Pages artifact and deploys it.
+# Bun + Vite project: validate the data, lint / typecheck, build the multi-file site into dist/
+# (deployed to Pages under /cosmic-elements-exhibit/) and the self-contained single HTML file
+# (kept as a workflow artifact). End-to-end tests run alongside, without gating the deploy.
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -13,29 +15,102 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: github-pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: Publish docs/ to GitHub Pages
+  build:
+    name: Validate, build & package
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Validate exhibit data
+        run: bun run validate:data
+
+      - name: Lint, typecheck, formatting
+        run: |
+          bun run lint
+          bun run typecheck
+          bun run format:check
+
+      - name: Unit tests
+        run: bun run test
+
+      - name: Build multi-file site (dist/)
+        run: bun run build
+
+      - name: Build single-file exhibit (dist-single/index.html)
+        run: bun run build:single
+
+      - name: Upload dist/ as the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Upload the single-file exhibit
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmic-elements-exhibit-single-html
+          path: dist-single/index.html
+          if-no-files-found: error
+
+  e2e:
+    name: Playwright regression (system Chrome)
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build both outputs
+        run: |
+          bun run build
+          bun run build:single
+
+      - name: Run Playwright suite
+        run: bun run test:e2e
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Configure Pages (enables the site on first run)
         uses: actions/configure-pages@v5
         with:
           enablement: true
-
-      - name: Upload docs/ as the Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
 
       - name: Deploy
         id: deployment
