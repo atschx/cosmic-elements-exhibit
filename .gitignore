@@ -1,0 +1,12 @@
+# Project-store housekeeping — not part of the published repository / site
+/artifacts/
+/internal/
+/notes.md
+/docs/*.zip
+/docs/cosmic-elements-exhibit.html
+
+# OS / editor / tooling
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
