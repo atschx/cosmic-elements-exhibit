@@ -299,6 +299,26 @@ test.describe('quality gates', () => {
     expect(external.filter((u) => u && !u.startsWith('data:'))).toEqual([]);
   });
 
+  test('the story link exists only in the Pages build (never in the single file)', async ({
+    page,
+    baseURL,
+  }) => {
+    await boot(page);
+    const single = !!baseURL?.includes('4174');
+    const links = page.locator('a.story-link, a.story-link-row');
+    if (single) {
+      await expect(links).toHaveCount(0);
+    } else {
+      await expect(links).toHaveCount(2);
+      await expect(links.filter({ visible: true })).toHaveCount(1);
+      await expect(links.first()).toHaveAttribute('href', '/cosmic-elements-exhibit/');
+      // presentation mode hides it with the rest of the chrome
+      await page.keyboard.press('p');
+      await expect(links.filter({ visible: true })).toHaveCount(0);
+      await page.keyboard.press('p');
+    }
+  });
+
   test('accessibility landmarks and names are in place', async ({ page }) => {
     await boot(page);
     await expect(page.locator('h1')).toContainText('宇宙元素起源表');

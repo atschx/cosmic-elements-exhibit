@@ -8,9 +8,15 @@
  *   • every element references a known category; every category/stage/domain is consistent
  *   • each abundance table only names real elements and sums to 99.8–100.3 % by mass
  *     (a domain may declare `sumRange` in domains.json to document a published-data exception)
+ *   • story.json (landing page) parses, and every image it references exists under public/story/
+ *     at ≤ 200 KB with the declared dimensions' aspect ratio
  * Exits non-zero with a readable list of problems.
  */
+import { statSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { DataError } from '@/data/schema';
+import { story, storyFigures } from '@/data/story';
 import {
   CATEGORY_KEYS,
   DOMAIN_KEYS,
@@ -151,6 +157,42 @@ try {
   const human = resolveSource({ type: 'ppm', table: 'human' });
   for (const s of essentialSymbols)
     check(s in human, `essential.json: ${s} is absent from human.json`);
+
+  /* ---------- story (landing page) ---------- */
+  const MAX_IMAGE_BYTES = 200 * 1024;
+  const publicDir = resolve(import.meta.dirname, '../public');
+  check(story.sections.length >= 3, 'story.json: expected at least 3 sections');
+  check(story.exhibit.cards.length === 3, 'story.json: expected exactly 3 exhibit cards');
+  check(
+    story.credits.items.some((c) => c.href === story.source.url),
+    'story.json: credits must link back to source.url',
+  );
+  const seen = new Set<string>();
+  for (const f of storyFigures(story)) {
+    const file = resolve(publicDir, f.src);
+    let size = -1;
+    try {
+      size = statSync(file).size;
+    } catch {
+      fail(`story.json: image ${f.src} is missing from public/`);
+      continue;
+    }
+    check(
+      size <= MAX_IMAGE_BYTES,
+      `story.json: ${f.src} is ${(size / 1024).toFixed(0)} KB (> 200 KB)`,
+    );
+    check(f.alt.length >= 10, `story.json: ${f.src} needs a descriptive alt text`);
+    const ratio = f.width / f.height;
+    check(
+      ratio > 1.2 && ratio < 2,
+      `story.json: ${f.src} has an odd aspect ratio ${ratio.toFixed(2)}`,
+    );
+    seen.add(f.src);
+  }
+  check(
+    seen.size >= 3 && seen.size <= 8,
+    `story.json: expected 3–8 distinct images, found ${seen.size}`,
+  );
 } catch (err) {
   if (err instanceof DataError) fail(err.message);
   else throw err;
@@ -170,3 +212,6 @@ console.log(
   `✓ validate:data — ${elements.length} elements · ${categories.length} categories · ${DOMAINS.length} realms · lit per category: ${CATEGORY_KEYS.map((k) => `${k}=${categoryCounts[k]}`).join(' ')}`,
 );
 console.log(`  realm mass-fraction sums: ${sums}`);
+console.log(
+  `  story.json: ${story.sections.length} sections · ${storyFigures(story).length} figures · ${story.exhibit.cards.length} cards · source "${story.source.title}" (${story.source.author}, ${story.source.publishedAt})`,
+);
