@@ -1,0 +1,77 @@
+/* ---------- Design tokens: colours, layout metrics, type ramp ---------- */
+@property --stage-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #38bdf8;
+}
+@property --lum {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+@property --tile {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 56px;
+}
+
+:root {
+  --bg: #05070c;
+  --bezel: #0d1117;
+  --panel: #0b1018;
+  --line: rgba(255, 255, 255, 0.08);
+  --txt: #e6edf3;
+  --muted: #8b98a8;
+  --dim: #5b6676;
+  --c-big-bang: #38bdf8;
+  --c-cosmic-rays: #f43f5e;
+  --c-low-mass-stars: #facc15;
+  --c-massive-stars: #10b981;
+  --c-white-dwarfs: #c084fc;
+  --c-neutron-star-mergers: #fb923c;
+  --c-human-synthesis: #94a3b8;
+  --stage-color: #38bdf8;
+  --header-h: 80px;
+  --deck-h: 214px;
+  --panel-w: clamp(220px, 16.5vw, 330px);
+  /* Viewport height that tracks the mobile browser chrome; falls back to 100vh */
+  --vh: 100vh;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  /* grid = 18 tiles + 17 gaps (0.1t) + padding (2 × 0.24t) ≈ 20.2t wide; 9 tiles + spacer row + 8 gaps + padding ≈ 10.7t tall */
+  --tile: min(
+    calc((100vw - 2 * var(--panel-w) - 96px) / 20.2),
+    calc((var(--vh) - var(--header-h) - var(--deck-h) - 20px) / 10.7)
+  );
+  --gap: calc(var(--tile) * 0.1);
+  /* Viewport-scaled type ramp (1366 → 1920 → 2560): xs ≈ 8.4/9.5/10.7 · sm ≈ 9.3/10.5/11.9 · md ≈ 10.2/11.5/13 · base ≈ 10.9/12.2/13.7 · lg ≈ 11.6/13/14.7 */
+  --fs-xs: clamp(8px, 5.8px + 0.19vw, 11px);
+  --fs-sm: clamp(9px, 6.4px + 0.215vw, 12.5px);
+  --fs-md: clamp(9.5px, 7px + 0.235vw, 13.5px);
+  --fs-base: clamp(10.5px, 7.6px + 0.24vw, 14px);
+  --fs-lg: clamp(11px, 8px + 0.26vw, 15px);
+  /* lever tick labels: box width and the rail's side inset must satisfy inset ≥ tick-w / 2 so end labels never spill into the neighbouring rail */
+  --tick-w: clamp(54px, 4.1vw, 86px);
+  --rail-inset: clamp(18px, 2.3vw, 46px);
+  --font:
+    'Inter', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif;
+  --mono:
+    'JetBrains Mono', 'SF Mono', 'Cascadia Mono', Consolas, 'Noto Sans Mono',
+    'Noto Sans Mono CJK SC', monospace;
+  transition:
+    --stage-color 0.9s ease,
+    --tile 0.55s ease;
+}
+@supports (height: 100dvh) {
+  :root {
+    --vh: 100dvh;
+  }
+}
+/* Presentation mode: side panels collapse, the wall takes the whole width and the deck slims down */
+html.present {
+  --panel-w: 0px;
+  --deck-h: 196px;
+}

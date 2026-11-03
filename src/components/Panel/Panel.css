@@ -1,0 +1,94 @@
+/* ---------- Stage: panels + wall ---------- */
+.stage {
+  display: grid;
+  grid-template-columns: var(--panel-w) minmax(0, 1fr) var(--panel-w);
+  gap: 20px;
+  padding: 10px 26px 6px;
+  min-height: 0;
+  transition:
+    grid-template-columns 0.55s ease,
+    gap 0.55s ease;
+}
+html.present .stage {
+  gap: 0;
+}
+.panel {
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 14px;
+  background: linear-gradient(180deg, rgba(17, 23, 33, 0.85), rgba(9, 12, 18, 0.9));
+  border: 1px solid #1c2531;
+  border-radius: 12px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  transform-origin: 50% 50%;
+  transition:
+    opacity 0.35s ease 0.15s,
+    transform 0.5s ease 0.1s,
+    visibility 0s linear 0s;
+}
+/* only the side panels fold away in presentation mode; drawer copies on compact screens stay usable */
+html.present .stage > .panel {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.94);
+  padding-left: 0;
+  padding-right: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  transition:
+    opacity 0.25s ease,
+    transform 0.4s ease,
+    visibility 0s linear 0.3s;
+}
+.panel::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--stage-color), transparent);
+  opacity: 0.8;
+}
+.etch {
+  font-size: var(--fs-sm);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin: 0 0 10px;
+}
+.etch em {
+  font-style: normal;
+  color: var(--muted);
+}
+
+.keys {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed #1f2834;
+  font-size: var(--fs-md);
+  color: var(--muted);
+  line-height: 1.7;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+}
+.keys span {
+  white-space: nowrap;
+}
+.keys kbd {
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  padding: 0 5px;
+  border: 1px solid #3a4656;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  color: #e2e8f0;
+  background: #0a0e14;
+  margin-right: 2px;
+}

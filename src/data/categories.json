@@ -1,0 +1,72 @@
+[
+  {
+    "key": "big-bang",
+    "nameZh": "大爆炸核合成",
+    "nameEn": "Big Bang Nucleosynthesis",
+    "color": "#38bdf8",
+    "processZh": "原初核合成 · 质子与中子在最初三分钟聚变",
+    "processEn": "Primordial fusion: p + n → D, ³He, ⁴He (and a whisper of ⁷Li) in the first minutes",
+    "starZh": "你体内的氢，来自时间的开端。",
+    "starEn": "The hydrogen in you is as old as time itself."
+  },
+  {
+    "key": "cosmic-rays",
+    "nameZh": "宇宙射线散裂",
+    "nameEn": "Cosmic Ray Fission",
+    "color": "#f43f5e",
+    "processZh": "散裂反应 · 宇宙射线击碎星际碳氮氧原子核，碎片即锂、铍、硼",
+    "processEn": "Spallation: cosmic rays shatter interstellar C, N and O nuclei into Li, Be and B",
+    "starZh": "有些元素不是被创造的，而是被击碎出来的。",
+    "starEn": "Some elements were not made, but broken into being."
+  },
+  {
+    "key": "low-mass-stars",
+    "nameZh": "小/低质量恒星演化",
+    "nameEn": "Low-mass Stars",
+    "color": "#facc15",
+    "processZh": "三α过程与慢中子俘获 (s-过程) · 渐近巨星支恒星",
+    "processEn": "Triple-alpha & slow neutron capture (s-process) in AGB stars",
+    "starZh": "太阳的同类，在暮年把碳交给了生命。",
+    "starEn": "Stars like our Sun handed carbon to life in their twilight."
+  },
+  {
+    "key": "massive-stars",
+    "nameZh": "大质量恒星爆发",
+    "nameEn": "Exploding Massive Stars",
+    "color": "#10b981",
+    "processZh": "多层核燃烧与核坍缩超新星 · 弱 s-过程",
+    "processEn": "Shell burning & core-collapse supernovae; weak s-process",
+    "starZh": "你呼吸的氧，是一颗巨星最后的馈赠。",
+    "starEn": "The oxygen you breathe is a giant star's final gift."
+  },
+  {
+    "key": "white-dwarfs",
+    "nameZh": "白矮星热核爆发",
+    "nameEn": "Exploding White Dwarfs",
+    "color": "#c084fc",
+    "processZh": "热核失控 · Ia 型超新星核统计平衡",
+    "processEn": "Thermonuclear runaway in Type Ia supernovae (nuclear statistical equilibrium)",
+    "starZh": "你血液中的铁，曾是一颗炸裂的白矮星。",
+    "starEn": "The iron in your blood was once an exploding white dwarf."
+  },
+  {
+    "key": "neutron-star-mergers",
+    "nameZh": "双中子星合并",
+    "nameEn": "Merging Neutron Stars",
+    "color": "#fb923c",
+    "processZh": "快中子俘获 (r-过程) · 千新星",
+    "processEn": "Rapid neutron capture (r-process) in kilonovae",
+    "starZh": "你戒指上的金，诞生于两颗死星的相撞。",
+    "starEn": "The gold on your finger was born when two dead stars collided."
+  },
+  {
+    "key": "human-synthesis",
+    "nameZh": "人工合成",
+    "nameEn": "Human-made",
+    "color": "#94a3b8",
+    "processZh": "粒子加速器与核反应堆 · 重离子聚变",
+    "processEn": "Particle accelerators & nuclear reactors; heavy-ion fusion",
+    "starZh": "星尘学会了铸造新的星尘。",
+    "starEn": "Starstuff has learned to forge new starstuff."
+  }
+]

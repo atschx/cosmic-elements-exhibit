@@ -1,0 +1,9 @@
+dist
+dist-single
+legacy
+node_modules
+media
+bun.lock
+test-results
+playwright-report
+*.png

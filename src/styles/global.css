@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: var(--font);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+button {
+  font-family: inherit;
+  color: inherit;
+}
+svg {
+  display: block;
+}
+
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% 118%,
+      color-mix(in srgb, var(--stage-color) 22%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 40% 30% at 12% 8%,
+      color-mix(in srgb, var(--stage-color) 9%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(ellipse 40% 30% at 90% 12%, rgba(255, 255, 255, 0.03), transparent 70%);
+}
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  height: var(--vh);
+  display: grid;
+  grid-template-rows: var(--header-h) minmax(0, 1fr) var(--deck-h);
+  transition: grid-template-rows 0.55s ease;
+}
+
+.led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1f2a37;
+  box-shadow: inset 0 0 2px #000;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.on .led,
+.led.on {
+  background: #34d399;
+  box-shadow:
+    0 0 8px #34d399,
+    0 0 2px #fff inset;
+}
+.led.off {
+  background: #f43f5e;
+  box-shadow: 0 0 8px #f43f5e;
+}
+.led.warn {
+  background: #facc15;
+  box-shadow: 0 0 8px #facc15;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Keyboard users get a visible ring; pointer users keep the museum's clean bezels */
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--stage-color) 80%, #fff);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .knob,
+  .groove::after,
+  .plaque .bar i,
+  :root,
+  #app,
+  .stage,
+  .panel {
+    transition-duration: 0.01s !important;
+  }
+}

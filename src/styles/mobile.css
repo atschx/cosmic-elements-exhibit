@@ -1,0 +1,458 @@
+/* =====================================================================
+   Touch & compact layouts (iPad landscape / portrait, phones)
+   Wide-screen rules live in responsive.css; everything here only kicks in
+   at ≤1180 px or on coarse-pointer devices and must not touch the desktop look.
+   ===================================================================== */
+
+/* Horizontal-scroll wrapper is inert on desktop */
+.wall-scroll {
+  display: contents;
+}
+
+/* ---------- Touch targets ≥ 44 px, no hover dependence ---------- */
+@media (pointer: coarse) {
+  .toggle,
+  .key,
+  .legend-item,
+  .hud-close,
+  .drawer-close {
+    min-height: 44px;
+  }
+  .toggle,
+  .key {
+    min-width: 44px;
+    justify-content: center;
+  }
+  .rail {
+    height: 64px;
+  }
+  .detent::before {
+    left: -18px;
+    right: -18px;
+    top: -22px;
+    bottom: -22px;
+  }
+  .knob {
+    width: 64px;
+    height: 48px;
+  }
+  .tick-lbl {
+    min-height: 44px;
+    padding-top: 4px;
+  }
+  .tile {
+    cursor: default;
+  }
+  /* a tapped (pinned) tile is the only one that swells on touch screens */
+  .tile.lit.pinned .card {
+    transform: rotateY(0deg) scale(1.14);
+  }
+  /* keyboard cheat-sheet is noise without a keyboard */
+  .keys {
+    display: none;
+  }
+}
+
+/* ---------- Stacked tier (portrait tablets): legend + plaque in a row under the wall ---------- */
+.stage.stacked {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 12px;
+}
+.stage.stacked .wall {
+  align-items: start;
+}
+.stage-lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 12px;
+  min-height: 0;
+}
+.stage-lower .panel {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 14px 12px;
+}
+/* seven processes fit the short row as two columns */
+.stage-lower .legend-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 8px;
+}
+#app[data-layout='stacked'] .toggle.drawer-tab {
+  display: none;
+}
+html.present .stage-lower {
+  display: none;
+}
+html.present .stage.stacked {
+  grid-template-rows: minmax(0, 1fr);
+}
+html.present .stage.stacked .wall {
+  align-items: center;
+}
+
+/* ---------- Compact tier (≤ 1180 px): drawers replace the side panels ---------- */
+@media (max-width: 1180px) {
+  /* `html.present` is listed too: it outranks :root and would otherwise restore the desktop deck height */
+  :root,
+  html.present {
+    --header-h: calc(72px + var(--safe-top));
+    --deck-h: 226px;
+    --rail-inset: clamp(26px, 4vw, 46px);
+    /* ≈ the notch spacing of a half-width rail, so neighbouring labels never collide */
+    --tick-w: clamp(38px, 5.2vw, 86px);
+  }
+  #app {
+    padding-top: var(--safe-top);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+  .marquee {
+    padding: 8px 14px 0;
+    gap: 10px;
+  }
+  .badge {
+    gap: 8px;
+  }
+  .badge svg {
+    width: 30px;
+    height: 30px;
+  }
+  .toggle.drawer-tab {
+    display: inline-flex;
+  }
+  .toggle .lbl .en {
+    display: none;
+  }
+  .title h1 {
+    font-size: clamp(14px, 1.9vw, 20px);
+  }
+  .title h1 .en {
+    display: none;
+  }
+  .title h1 .sep {
+    display: none;
+  }
+  .subtitle {
+    font-size: clamp(11px, 1.4vw, 14px);
+  }
+  .stage {
+    padding: 8px 14px 6px;
+  }
+  /* the wall uses the full width now that the panels are gone */
+  :root {
+    --tile: min(
+      calc((100vw - var(--safe-left) - var(--safe-right) - 28px) / 20.2),
+      calc((var(--vh) - var(--header-h) - var(--deck-h) - 14px) / 10.7)
+    );
+  }
+  .deck-wrap {
+    padding: 0 12px calc(10px + var(--safe-bottom));
+  }
+  .deck {
+    transform: perspective(900px) rotateX(8deg);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'center'
+      'keys';
+    gap: 8px;
+    padding: 10px 14px 10px;
+    align-items: stretch;
+  }
+  .deck-center {
+    grid-area: center;
+    gap: 22px;
+  }
+  .rail-block + .rail-block::before {
+    left: -11px;
+  }
+  /* prev / next and the mode keys collapse into one row */
+  .deck-left,
+  .deck-right {
+    grid-area: keys;
+    flex-direction: row;
+    align-items: stretch;
+    container-type: normal;
+  }
+  .deck-left {
+    justify-content: flex-start;
+  }
+  .deck-right {
+    justify-content: flex-end;
+  }
+  .deck-left .btn-row,
+  .deck-right .btn-row {
+    gap: 8px;
+  }
+  .deck-left .btn-row .key,
+  .deck-right .btn-row .key {
+    flex: 0 0 auto;
+    padding: 8px 10px;
+  }
+  .deck-right .btn-row:last-child {
+    display: flex;
+  }
+  .key .lbl small {
+    display: none;
+  }
+  .key.auto .lbl {
+    display: none;
+  }
+  /* notch names may wrap onto two balanced lines; the bracket moves below them */
+  .rail-ticks {
+    height: 54px;
+  }
+  .tick-lbl {
+    white-space: normal;
+    text-wrap: balance;
+    line-height: 1.2;
+  }
+  .bracket {
+    top: 40px;
+  }
+  .hud {
+    width: 300px;
+  }
+}
+
+/* iPad portrait and similar: ≤ 900 px — the two rails still fit side by side, keys shrink to icons */
+@media (max-width: 900px) {
+  :root,
+  html.present {
+    --deck-h: 228px;
+  }
+  .deck-center {
+    gap: 18px;
+  }
+  .bracket span {
+    display: none;
+  }
+  /* header toggles shrink to icon + key so the title keeps its room */
+  .top-controls .toggle:not(.drawer-tab) .lbl {
+    display: none;
+  }
+  .deck-left .btn-row .key .lbl,
+  .deck-right .btn-row .key .lbl {
+    display: none;
+  }
+  .key.has-ring {
+    padding-left: 26px;
+  }
+  .tick-lbl {
+    font-size: var(--fs-xs);
+  }
+}
+
+/* ---------- Phones (≤ 640 px): rails stack, the wall scrolls sideways ---------- */
+@media (max-width: 640px) {
+  :root,
+  html.present {
+    --header-h: calc(74px + var(--safe-top));
+    --deck-h: 286px;
+    --rail-inset: 30px;
+    --tick-w: 42px;
+    /* keep symbols legible: tiles never shrink below 34 px, the wall scrolls instead */
+    --tile: max(
+      34px,
+      min(
+        calc((100vw - 20px) / 20.2),
+        calc((var(--vh) - var(--header-h) - var(--deck-h) - 12px) / 10.7)
+      )
+    );
+    --fs-xs: 9px;
+    --fs-sm: 10px;
+    --fs-md: 11px;
+    --fs-base: 12px;
+    --fs-lg: 13px;
+  }
+  #app {
+    grid-template-rows: var(--header-h) minmax(0, 1fr) var(--deck-h);
+  }
+  /* two rows: [legend] title [plaque · P · F · M] over a full-width subtitle */
+  .marquee {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    padding: 6px 10px 0;
+    gap: 2px 6px;
+  }
+  .badge > svg {
+    display: none;
+  }
+  .title {
+    display: contents;
+  }
+  .title h1 {
+    font-size: 14px;
+    letter-spacing: 0.03em;
+  }
+  .title h1 .venue {
+    display: none;
+  }
+  .subtitle {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+    width: 100%;
+    font-size: 11px;
+    max-width: none;
+    text-align: center;
+  }
+  .toggle {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+  /* every header control is icon-only on phones (names stay on title / aria-label) */
+  .toggle kbd,
+  .toggle .lbl,
+  .toggle.drawer-tab .lbl {
+    display: none;
+  }
+  .stage {
+    padding: 6px 10px 4px;
+  }
+  .wall {
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .wall-scroll {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    padding: 6px 0 10px;
+  }
+  .wall-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .grid {
+    margin: 0 auto;
+    scroll-snap-align: center;
+  }
+  /* sideways-scroll hint fades in only when the wall is wider than the screen */
+  .wall::after {
+    content: '← 左右滑动 · swipe →';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--dim);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .deck-wrap {
+    padding: 0 8px calc(8px + var(--safe-bottom));
+  }
+  .deck {
+    transform: none;
+    border-radius: 14px 14px 8px 8px;
+    gap: 6px;
+    padding: 8px 10px 8px;
+  }
+  .deck-center {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  .rail-block + .rail-block::before {
+    display: none;
+  }
+  .rail-block {
+    gap: 2px;
+  }
+  .rail {
+    height: 50px;
+    margin-top: 0;
+  }
+  .groove {
+    height: 12px;
+  }
+  .knob {
+    width: 56px;
+    height: 40px;
+  }
+  .rail-label {
+    font-size: 10px;
+  }
+  .rail-label span b {
+    font-size: 12px;
+  }
+  .rail-ticks {
+    height: 36px;
+  }
+  .tick-lbl {
+    min-height: 0;
+    padding-top: 0;
+    font-size: 9px;
+    line-height: 1.15;
+  }
+  .tick-lbl b {
+    font-size: 9px;
+    margin-bottom: 1px;
+  }
+  .bracket {
+    display: none;
+  }
+  .deck-left,
+  .deck-right {
+    gap: 6px;
+  }
+  .deck-left .btn-row .key,
+  .deck-right .btn-row .key {
+    padding: 8px 9px;
+    min-width: 44px;
+  }
+  .key.auto .countdown,
+  .key.auto .countdown svg {
+    width: 28px;
+    height: 28px;
+  }
+  .key.has-ring {
+    padding-left: 24px;
+  }
+}
+
+/* Short landscape phones: a fixed three-row shell would crush the wall to ~16 px tiles,
+   so the page scrolls instead — header, legible wall (width-sized tiles), then the console. */
+@media (max-height: 480px) and (max-width: 1180px) {
+  :root,
+  html.present {
+    --header-h: calc(48px + var(--safe-top));
+    --tile: calc((100vw - var(--safe-left) - var(--safe-right) - 28px) / 20.2);
+  }
+  body {
+    overflow: hidden auto;
+    overscroll-behavior-y: auto;
+  }
+  #app {
+    height: auto;
+    min-height: var(--vh);
+    grid-template-rows: var(--header-h) auto auto;
+  }
+  .wall {
+    padding: 4px 0 8px;
+  }
+  .deck {
+    height: auto;
+  }
+  .subtitle {
+    display: none;
+  }
+  .rail-ticks {
+    height: 44px;
+  }
+  .bracket {
+    display: none;
+  }
+  .hud.sheet {
+    max-height: calc(var(--vh) - 24px);
+  }
+}

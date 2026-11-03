@@ -1,0 +1,147 @@
+/* ---------- Right plaque ---------- */
+.plaque .idx {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--mono);
+  color: var(--stage-color);
+  font-size: var(--fs-md);
+  letter-spacing: 0.2em;
+  transition: color 0.9s ease;
+}
+.plaque .idx b {
+  font-size: clamp(24px, 1.6vw, 32px);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-shadow: 0 0 18px var(--stage-color);
+}
+.plaque .idx small {
+  color: var(--dim);
+  font-size: var(--fs-base);
+}
+.plaque .time {
+  margin-top: 2px;
+  font-family: var(--mono);
+  font-size: var(--fs-md);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.plaque h2 {
+  margin: 10px 0 0;
+  font-size: clamp(16px, 1vw, 20px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.plaque h3 {
+  margin: 2px 0 0;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: #c3ccd8;
+  letter-spacing: 0.04em;
+}
+.plaque .bar {
+  margin: 12px 0 10px;
+  height: 2px;
+  background: #1b2430;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.plaque .bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--stage-color);
+  box-shadow: 0 0 10px var(--stage-color);
+  transition:
+    width 1.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.9s;
+}
+.plaque .top5 {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+body[data-axis='abundance'] .plaque .top5 {
+  display: flex;
+}
+.plaque .top5 li {
+  display: grid;
+  grid-template-columns: 30px 1fr 58px;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: var(--fs-md);
+  color: var(--muted);
+}
+.plaque .top5 li b {
+  color: #fff;
+  font-weight: 600;
+}
+.plaque .top5 li b small {
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 4px;
+  font-family: var(--font);
+}
+.plaque .top5 li i {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  width: var(--w);
+  background: var(--stage-color);
+  box-shadow: 0 0 8px var(--stage-color);
+  transition:
+    width 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.9s;
+}
+.plaque .top5 li span {
+  text-align: right;
+  color: #e6edf3;
+}
+.plaque .nar {
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  padding-right: 4px;
+  margin-top: 10px;
+}
+.plaque .nar p {
+  margin: 0 0 8px;
+  font-size: var(--fs-lg);
+  line-height: 1.6;
+  color: #d4dbe4;
+}
+.plaque .nar p.en {
+  color: var(--muted);
+  font-size: var(--fs-base);
+}
+.plaque .starstuff {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed #1f2834;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--stage-color);
+  transition: color 0.9s;
+}
+.plaque .starstuff .en {
+  display: block;
+  font-style: italic;
+  color: var(--muted);
+}
+.plaque .lit-readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: var(--fs-md);
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+.plaque .lit-readout b {
+  color: #fff;
+  font-size: clamp(13px, 0.8vw, 16px);
+}

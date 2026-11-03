@@ -1,0 +1,322 @@
+/* ---------- Glass telemetry HUD ---------- */
+.hud {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  width: 324px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(var(--vh) - 24px);
+  overflow: auto;
+  scrollbar-width: none;
+  padding: 14px 16px 12px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(20, 27, 40, 0.78), rgba(8, 12, 18, 0.78));
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.65),
+    0 0 0 1px color-mix(in srgb, var(--stage-color) 35%, transparent),
+    0 0 40px -10px var(--stage-color);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.98);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    visibility 0s linear 0.22s;
+  pointer-events: none;
+}
+.hud.show {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    visibility 0s;
+}
+.hud.pinned {
+  pointer-events: auto;
+}
+.hud::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--stage-color), transparent);
+}
+.hud-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.hud-sym {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: clamp(24px, 1.5vw, 30px);
+  font-weight: 700;
+  color: #fff;
+  background: color-mix(in srgb, var(--stage-color) 30%, #0b1018);
+  border: 1px solid color-mix(in srgb, var(--stage-color) 75%, transparent);
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--stage-color) 60%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--stage-color) 50%, transparent);
+  text-shadow: 0 0 12px var(--stage-color);
+  position: relative;
+}
+.hud-sym small {
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: color-mix(in srgb, var(--stage-color) 60%, #fff);
+}
+.hud-names .zh {
+  font-size: clamp(17px, 1.05vw, 21px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.hud-names .en {
+  font-size: var(--fs-lg);
+  color: #c3ccd8;
+}
+.hud-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.hud-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: var(--fs-md);
+  color: #fff;
+  background: color-mix(in srgb, var(--stage-color) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--stage-color) 55%, transparent);
+}
+.hud-chip i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--stage-color);
+  box-shadow: 0 0 8px var(--stage-color);
+}
+.hud-chip.ess {
+  --stage-color: #fb7185;
+}
+.hud-chip.ess i {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.hud-ab {
+  margin: 0 0 10px;
+}
+.hud-ab > .lbl {
+  display: block;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 6px;
+}
+.ab-bars {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.ab-bars .ab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 2px 3px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+.ab-bars .ab.cur {
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  border-color: color-mix(in srgb, var(--c) 45%, transparent);
+}
+.ab-bars .ab .col {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+.ab-bars .ab .col i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--h);
+  background: var(--c);
+  box-shadow: 0 0 8px var(--c);
+  border-radius: 3px 3px 0 0;
+}
+.ab-bars .ab.none .col::after {
+  content: '—';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--dim);
+  font-size: var(--fs-sm);
+}
+.ab-bars .ab span {
+  font-size: var(--fs-sm);
+  color: #cbd5e1;
+}
+.ab-bars .ab small {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.ab-bars .ab.cur small {
+  color: #fff;
+}
+.hud-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin: 12px 0 10px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.hud-grid .lbl {
+  display: block;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 3px;
+}
+.hud-grid b {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: var(--fs-base);
+  color: #e6edf3;
+}
+.hud-grid .wide {
+  grid-column: 1 / -1;
+}
+.hud-grid .wide b {
+  font-family: var(--font);
+  font-size: var(--fs-base);
+}
+.hud-grid .wide b.mono {
+  font-family: var(--mono);
+}
+.hud-nar {
+  margin: 0 0 6px;
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: #dbe2ea;
+}
+.hud-nar.en {
+  color: var(--muted);
+  font-size: var(--fs-md);
+}
+.hud-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+}
+.hud-foot .status {
+  font-family: var(--mono);
+  color: var(--stage-color);
+}
+.hud-foot .status.dormant {
+  color: var(--dim);
+}
+.hud-foot em {
+  color: var(--muted);
+  font-style: italic;
+  text-align: right;
+}
+.hud-foot .pin-hint {
+  color: var(--dim);
+  font-size: var(--fs-xs);
+}
+
+/* Touch devices: the HUD becomes a bottom sheet with a grab handle and a close key */
+.hud-close {
+  display: none;
+}
+.hud.sheet {
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 0;
+  width: auto;
+  /* phones take the full width; on tablets the sheet stays a readable column, centred */
+  max-width: 640px;
+  margin: 0 auto;
+  max-height: min(72vh, calc(var(--vh) - 56px));
+  border-radius: 18px 18px 0 0;
+  padding: 10px 16px calc(14px + var(--safe-bottom));
+  transform: translateY(100%);
+  transition:
+    opacity 0.26s ease,
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s linear 0.3s;
+}
+.hud.sheet.show {
+  transform: none;
+  transition:
+    opacity 0.26s ease,
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s;
+}
+.hud.sheet::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 44px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateX(-50%);
+}
+.hud.sheet .hud-close {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e6edf3;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.hud.sheet .hud-head {
+  margin-top: 10px;
+  padding-right: 52px;
+}
+.hud.sheet .hud-foot .pin-hint:first-child {
+  display: none;
+}
