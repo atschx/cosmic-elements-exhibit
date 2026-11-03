@@ -1,0 +1,94 @@
+/* ---------- Sticky top bar: brand + story / exhibit switch ---------- */
+.l-top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding-top: var(--safe-top);
+  background: color-mix(in srgb, var(--bg) 74%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.l-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--l-top-h);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--txt);
+  text-decoration: none;
+}
+.brand svg {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  color: var(--stage-color);
+  filter: drop-shadow(0 0 8px var(--stage-color));
+  transition: color 0.9s ease;
+}
+.brand-text .zh {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+.brand-text .en {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+.l-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.l-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+.l-nav a[aria-current] {
+  color: var(--txt);
+}
+.l-nav .nav-cta {
+  color: var(--txt);
+  border: 1px solid color-mix(in srgb, var(--stage-color) 50%, transparent);
+  background: color-mix(in srgb, var(--stage-color) 12%, transparent);
+}
+@media (hover: hover) {
+  .l-nav a:hover {
+    color: var(--txt);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .l-nav .nav-cta:hover {
+    background: color-mix(in srgb, var(--stage-color) 22%, transparent);
+    border-color: color-mix(in srgb, var(--stage-color) 75%, transparent);
+  }
+}
+@media (max-width: 640px) {
+  .brand-text .en,
+  .l-nav a .en,
+  .l-nav a .bi .en::before {
+    display: none;
+  }
+  .l-nav a {
+    padding: 0 12px;
+  }
+}

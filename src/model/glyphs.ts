@@ -5,7 +5,8 @@ import type { ChemicalElement } from '@/data';
  * system fonts lack. Probe each glyph against the page font; if it would render as tofu,
  * fall back to the official pinyin so the lightbox never shows an empty box.
  */
-const glyphOk: (ch: string) => boolean = (() => {
+/** True when the page font can paint `ch` (false → it would render as a tofu box). */
+export const glyphRenders: (ch: string) => boolean = (() => {
   const cache = new Map<string, boolean>();
   let probe: ((ch: string) => boolean) | null = null;
   try {
@@ -51,7 +52,7 @@ const displayCache = new WeakMap<ChemicalElement, string>();
 export function zhDisplay(el: ChemicalElement): string {
   let v = displayCache.get(el);
   if (v === undefined) {
-    v = !el.pinyin || Array.from(el.nameZh).every(glyphOk) ? el.nameZh : el.pinyin;
+    v = !el.pinyin || Array.from(el.nameZh).every(glyphRenders) ? el.nameZh : el.pinyin;
     displayCache.set(el, v);
   }
   return v;

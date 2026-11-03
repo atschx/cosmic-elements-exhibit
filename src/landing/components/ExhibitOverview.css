@@ -1,0 +1,150 @@
+/* ---------- "What's in the exhibit": three cards with exhibit stills ---------- */
+.overview {
+  padding: clamp(56px, 9vh, 110px) 0 clamp(40px, 6vh, 72px);
+  border-top: 1px solid var(--line);
+}
+.overview-head {
+  max-width: 46em;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+.overview-intro {
+  margin: 0;
+  font-size: var(--l-body);
+  line-height: 1.8;
+  color: var(--l-ink);
+}
+.overview-intro .en {
+  margin-top: 0.3em;
+  font-size: 0.9em;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, #0f1520, #0a0e15);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-bottom: 1px solid var(--line);
+}
+.card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 18px 20px;
+}
+.card h3 {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.3;
+}
+.card h3 .en {
+  margin-top: 0.25em;
+  font-size: 0.78em;
+  font-weight: 500;
+}
+.card-link {
+  color: inherit;
+  text-decoration: none;
+}
+/* the title link stretches over the whole card; its accessible name stays short */
+.card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.card p.zh {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--l-ink);
+}
+.card p.en {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.card-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: auto 0 0;
+  padding-top: 10px;
+}
+.card-keys kbd {
+  font-size: 12px;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--stage-color) 55%, transparent);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.55),
+      0 0 40px color-mix(in srgb, var(--stage-color) 18%, transparent);
+  }
+  .card:hover .card-link {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--stage-color);
+  }
+}
+.card:focus-within {
+  border-color: color-mix(in srgb, var(--stage-color) 80%, #fff);
+}
+
+@media (max-width: 1000px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* an odd last card lies across both columns as a horizontal card */
+  .cards > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    flex-direction: row;
+  }
+  .cards > :last-child:nth-child(odd) img {
+    width: 46%;
+    height: 100%;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+  }
+}
+@media (max-width: 640px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .cards > :last-child:nth-child(odd) {
+    flex-direction: column;
+  }
+  .cards > :last-child:nth-child(odd) img {
+    width: 100%;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}

@@ -1,0 +1,122 @@
+/* ---------- Closing CTA + shortcut cheat-sheet ---------- */
+.outro {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(56px, 9vh, 110px) 0;
+  border-top: 1px solid var(--line);
+}
+.outro::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -30%;
+  height: 90%;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 55% 55% at 50% 100%,
+    color-mix(in srgb, var(--stage-color) 18%, transparent),
+    transparent 70%
+  );
+}
+.outro-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+}
+.outro h2 {
+  margin: 0 0 0.5em;
+  font-size: clamp(26px, 1.4vw + 18px, 40px);
+  font-weight: 700;
+  line-height: 1.25;
+  text-wrap: balance;
+  text-shadow: 0 0 40px color-mix(in srgb, var(--stage-color) 30%, transparent);
+}
+.outro h2 .en {
+  margin-top: 0.4em;
+  font-size: 0.55em;
+  font-weight: 500;
+}
+.outro-text {
+  margin: 0 0 28px;
+  font-size: var(--l-body);
+  line-height: 1.8;
+  color: var(--l-ink);
+}
+.outro-text .en {
+  margin-top: 0.3em;
+  font-size: 0.9em;
+}
+
+.shortcuts {
+  padding: 22px 24px 24px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+}
+.shortcuts h3 {
+  margin: 0 0 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.shortcuts h3 .zh {
+  color: var(--txt);
+}
+.shortcuts ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.shortcuts li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.shortcuts .keys {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  min-width: 74px;
+}
+.shortcuts kbd {
+  font-size: 12px;
+}
+.key-sep {
+  align-self: center;
+  color: var(--dim);
+}
+.shortcuts .act .zh {
+  color: var(--l-ink);
+}
+.shortcuts .act .en {
+  display: block;
+  font-size: 12.5px;
+}
+.shortcuts .act.bi .en::before {
+  content: none;
+}
+
+@media (max-width: 900px) {
+  .outro-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .shortcuts ul {
+    grid-template-columns: 1fr;
+  }
+  .outro .cta.big {
+    width: 100%;
+  }
+}
