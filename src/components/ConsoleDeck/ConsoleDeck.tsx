@@ -1,15 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 
 import { useSound } from '@/audio/useSound';
-import {
-  DOMAINS,
-  EPOCH_COUNT,
-  PANORAMA,
-  STAGES,
-  pad,
-  stageColor,
-  supernovaBracket,
-} from '@/model';
+import { DOMAINS, EPOCH_COUNT, PANORAMA, STAGES, pad, stageColor, supernovaBracket } from '@/model';
 import { useExhibit, useExhibitStore } from '@/state/hooks';
 import { isPanorama } from '@/state/selectors';
 
@@ -76,8 +68,10 @@ export function ConsoleDeck() {
   };
   const enter = () => sound.tick(0.5);
 
-  const epochText = stage === PANORAMA ? `ALL/${pad(EPOCH_COUNT)}` : `${pad(stage + 1)}/${pad(EPOCH_COUNT)}`;
-  const realmText = domain >= 0 ? `${pad(domain + 1)}/${pad(DOMAINS.length)}` : `--/${pad(DOMAINS.length)}`;
+  const epochText =
+    stage === PANORAMA ? `ALL/${pad(EPOCH_COUNT)}` : `${pad(stage + 1)}/${pad(EPOCH_COUNT)}`;
+  const realmText =
+    domain >= 0 ? `${pad(domain + 1)}/${pad(DOMAINS.length)}` : `--/${pad(DOMAINS.length)}`;
 
   return (
     <footer className="deck-wrap">

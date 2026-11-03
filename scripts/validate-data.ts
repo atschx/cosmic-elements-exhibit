@@ -56,36 +56,61 @@ try {
     check(!cells.has(cell), `${tag}: grid cell ${cell} already occupied`);
     cells.add(cell);
     check(Number.isFinite(massOf(e)) && massOf(e) > 0, `${tag}: mass "${e.mass}" is not numeric`);
-    check(/^(\[[A-Z][a-z]?\] )?(\d[spdf]\d{1,2}( |$))+$/.test(`${e.config} `), `${tag}: odd electron configuration "${e.config}"`);
+    check(
+      /^(\[[A-Z][a-z]?\] )?(\d[spdf]\d{1,2}( |$))+$/.test(`${e.config} `),
+      `${tag}: odd electron configuration "${e.config}"`,
+    );
     check(e.narrativeZh.length >= 20, `${tag}: narrativeZh looks truncated`);
     check(e.narrativeEn.length >= 40, `${tag}: narrativeEn looks truncated`);
     check(
       (CATEGORY_KEYS as readonly string[]).includes(e.originCategory),
       `${tag}: unknown originCategory ${e.originCategory}`,
     );
-    if (e.gridRow === 8) check(e.atomicNumber >= 57 && e.atomicNumber <= 71, `${tag}: row 8 is lanthanides`);
-    if (e.gridRow === 9) check(e.atomicNumber >= 89 && e.atomicNumber <= 103, `${tag}: row 9 is actinides`);
+    if (e.gridRow === 8)
+      check(e.atomicNumber >= 57 && e.atomicNumber <= 71, `${tag}: row 8 is lanthanides`);
+    if (e.gridRow === 9)
+      check(e.atomicNumber >= 89 && e.atomicNumber <= 103, `${tag}: row 9 is actinides`);
   });
   check(cells.has('1:1') && cells.has('1:18'), 'elements.json: H and He must anchor period 1');
 
   /* ---------- categories / stages ---------- */
-  check(categories.length === CATEGORY_KEYS.length, `categories.json: expected ${CATEGORY_KEYS.length} categories`);
+  check(
+    categories.length === CATEGORY_KEYS.length,
+    `categories.json: expected ${CATEGORY_KEYS.length} categories`,
+  );
   const catKeys = new Set(categories.map((c) => c.key));
   for (const k of CATEGORY_KEYS) check(catKeys.has(k), `categories.json: missing category ${k}`);
   for (const k of CATEGORY_KEYS) check(categoryCounts[k] > 0, `category ${k} lights no element`);
 
   const stagesJson = (await import('@/data')).stages;
-  check(stagesJson.length === 8, `stages.json: expected 7 epochs + panorama, found ${stagesJson.length}`);
-  const stageCats = stagesJson.map((s) => s.cat).filter((c): c is NonNullable<typeof c> => c !== null);
-  check(new Set(stageCats).size === stageCats.length, 'stages.json: a category appears on two notches');
+  check(
+    stagesJson.length === 8,
+    `stages.json: expected 7 epochs + panorama, found ${stagesJson.length}`,
+  );
+  const stageCats = stagesJson
+    .map((s) => s.cat)
+    .filter((c): c is NonNullable<typeof c> => c !== null);
+  check(
+    new Set(stageCats).size === stageCats.length,
+    'stages.json: a category appears on two notches',
+  );
   for (const k of CATEGORY_KEYS) check(stageCats.includes(k), `stages.json: no notch lights ${k}`);
-  check(stagesJson.filter((s) => s.cat === null).length === 1, 'stages.json: exactly one panorama notch');
-  check(stagesJson[stagesJson.length - 1]?.cat === null, 'stages.json: panorama must be the last notch');
+  check(
+    stagesJson.filter((s) => s.cat === null).length === 1,
+    'stages.json: exactly one panorama notch',
+  );
+  check(
+    stagesJson[stagesJson.length - 1]?.cat === null,
+    'stages.json: panorama must be the last notch',
+  );
   const numerals = new Set(stagesJson.map((s) => s.numeral));
   check(numerals.size === stagesJson.length, 'stages.json: numerals must be unique');
 
   /* ---------- domains & abundance ---------- */
-  check(domains.length === DOMAIN_KEYS.length, `domains.json: expected ${DOMAIN_KEYS.length} realms`);
+  check(
+    domains.length === DOMAIN_KEYS.length,
+    `domains.json: expected ${DOMAIN_KEYS.length} realms`,
+  );
   const domainKeys = new Set(domains.map((d) => d.key));
   for (const k of DOMAIN_KEYS) check(domainKeys.has(k), `domains.json: missing realm ${k}`);
 
@@ -93,10 +118,12 @@ try {
     ['solar-logeps.json', solarLogEps],
     ...Object.entries(ppmTables).map(([k, t]) => [`${k}.json`, t] as const),
   ] as const) {
-    for (const sym of Object.keys(table)) check(symbols.has(sym), `${name}: unknown element symbol ${sym}`);
+    for (const sym of Object.keys(table))
+      check(symbols.has(sym), `${name}: unknown element symbol ${sym}`);
   }
   for (const [name, table] of Object.entries(ppmTables)) {
-    for (const [sym, v] of Object.entries(table)) check(v > 0, `${name}.json: ${sym} must be > 0 ppm`);
+    for (const [sym, v] of Object.entries(table))
+      check(v > 0, `${name}.json: ${sym} must be > 0 ppm`);
   }
 
   for (const d of domains) {
@@ -122,7 +149,8 @@ try {
   check(new Set(essentialSymbols).size === essentialSymbols.length, 'essential.json: duplicates');
   for (const s of essentialSymbols) check(symbols.has(s), `essential.json: unknown symbol ${s}`);
   const human = resolveSource({ type: 'ppm', table: 'human' });
-  for (const s of essentialSymbols) check(s in human, `essential.json: ${s} is absent from human.json`);
+  for (const s of essentialSymbols)
+    check(s in human, `essential.json: ${s} is absent from human.json`);
 } catch (err) {
   if (err instanceof DataError) fail(err.message);
   else throw err;

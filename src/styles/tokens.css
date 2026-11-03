@@ -59,8 +59,8 @@
     'Inter', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
     'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif;
   --mono:
-    'JetBrains Mono', 'SF Mono', 'Cascadia Mono', Consolas, 'Noto Sans Mono', 'Noto Sans Mono CJK SC',
-    monospace;
+    'JetBrains Mono', 'SF Mono', 'Cascadia Mono', Consolas, 'Noto Sans Mono',
+    'Noto Sans Mono CJK SC', monospace;
   transition:
     --stage-color 0.9s ease,
     --tile 0.55s ease;

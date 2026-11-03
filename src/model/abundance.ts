@@ -80,8 +80,7 @@ export function domainAt(i: number): DomainModel {
 }
 
 /** Glow ∝ log10 of mass fraction: 1 ppt → 0, 100 % → 1. */
-export const lumOf = (ppm: number): number =>
-  Math.max(0, Math.min(1, (Math.log10(ppm) + 6) / 12));
+export const lumOf = (ppm: number): number => Math.max(0, Math.min(1, (Math.log10(ppm) + 6) / 12));
 
 const sig = (v: number): string =>
   v >= 100

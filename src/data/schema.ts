@@ -67,12 +67,7 @@ function int(o: Rec, key: string, path: string, min: number, max: number): numbe
   return v;
 }
 
-function oneOf<T extends string>(
-  o: Rec,
-  key: string,
-  path: string,
-  allowed: readonly T[],
-): T {
+function oneOf<T extends string>(o: Rec, key: string, path: string, allowed: readonly T[]): T {
   const v = str(o, key, path);
   if (!(allowed as readonly string[]).includes(v))
     throw new DataError(`${path}.${key}`, `"${v}" is not one of ${allowed.join(', ')}`);

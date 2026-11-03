@@ -267,7 +267,9 @@
   top: auto;
   bottom: 0;
   width: auto;
-  max-width: none;
+  /* phones take the full width; on tablets the sheet stays a readable column, centred */
+  max-width: 640px;
+  margin: 0 auto;
   max-height: min(72vh, calc(var(--vh) - 56px));
   border-radius: 18px 18px 0 0;
   padding: 10px 16px calc(14px + var(--safe-bottom));

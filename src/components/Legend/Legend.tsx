@@ -1,12 +1,5 @@
 import { useSound } from '@/audio/useSound';
-import {
-  CATEGORIES,
-  ELEMENTS,
-  PANORAMA,
-  categoryCounts,
-  categoryToStage,
-  stageAt,
-} from '@/model';
+import { CATEGORIES, ELEMENTS, PANORAMA, categoryCounts, categoryToStage, stageAt } from '@/model';
 import { useExhibit, useExhibitStore } from '@/state/hooks';
 
 import './Legend.css';

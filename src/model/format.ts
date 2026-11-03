@@ -4,8 +4,13 @@ const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
 
 /** "[Ar] 3d6 4s2" → "[Ar] 3d⁶ 4s²" */
 export const supCfg = (cfg: string): string =>
-  cfg.replace(/([spdf])(\d+)/g, (_m, l: string, d: string) =>
-    l + Array.from(d).map((c) => SUP[+c] ?? c).join(''),
+  cfg.replace(
+    /([spdf])(\d+)/g,
+    (_m, l: string, d: string) =>
+      l +
+      Array.from(d)
+        .map((c) => SUP[+c] ?? c)
+        .join(''),
   );
 
 export const pad = (n: number, w = 2): string => String(n).padStart(w, '0');

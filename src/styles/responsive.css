@@ -94,8 +94,11 @@ html.present .deck-left {
   .marquee {
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
-  .badge span,
-  .badge b {
+  /* auto-sized grid tracks collapse an inline-size container to 0 px, so the cluster stops being a container here */
+  .top-controls {
+    container-type: normal;
+  }
+  .badge > div {
     display: none;
   }
   .stage {

@@ -84,7 +84,8 @@ export class SoundEngine {
 
   setMuted(m: boolean): void {
     this._muted = m;
-    if (this.master && this.ctx) this.master.gain.setTargetAtTime(m ? 0 : 0.7, this.ctx.currentTime, 0.02);
+    if (this.master && this.ctx)
+      this.master.gain.setTargetAtTime(m ? 0 : 0.7, this.ctx.currentTime, 0.02);
   }
 
   private burst(
@@ -161,7 +162,13 @@ export class SoundEngine {
       gain: 0.16 * vol,
       dur: 0.022 + Math.random() * 0.012,
     });
-    this.tone(t, { f0: 420 + Math.random() * 260, f1: 90, type: 'sine', gain: 0.09 * vol, dur: 0.045 });
+    this.tone(t, {
+      f0: 420 + Math.random() * 260,
+      f1: 90,
+      type: 'sine',
+      gain: 0.09 * vol,
+      dur: 0.045,
+    });
   }
 
   /** Button press: lighter clack. */

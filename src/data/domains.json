@@ -64,10 +64,7 @@
       "type": "ppm",
       "table": "crust"
     },
-    "sumRange": [
-      99.8,
-      100.35
-    ],
+    "sumRange": [99.8, 100.35],
     "sumNote": "CRC Handbook crustal values are individually rounded and sum to 100.31% by mass; kept as published rather than renormalised."
   },
   {

@@ -19,7 +19,10 @@ export function PulseLayer() {
     const r = knob?.getBoundingClientRect();
     const cx = r ? r.left + r.width / 2 : window.innerWidth / 2;
     const cy = r ? r.top + r.height / 2 : window.innerHeight;
-    const maxR = Math.hypot(Math.max(cx, window.innerWidth - cx), Math.max(cy, window.innerHeight - cy));
+    const maxR = Math.hypot(
+      Math.max(cx, window.innerWidth - cx),
+      Math.max(cy, window.innerHeight - cy),
+    );
     const circles = [0, 140].map((delay, k) => {
       const c = document.createElementNS(SVG_NS, 'circle');
       c.setAttribute('cx', String(cx));

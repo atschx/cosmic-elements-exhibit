@@ -15,15 +15,7 @@ import {
 
 export type Axis = 'origin' | 'abundance';
 export type ChangeSource =
-  | 'boot'
-  | 'key'
-  | 'drag'
-  | 'detent'
-  | 'label'
-  | 'legend'
-  | 'button'
-  | 'auto'
-  | 'api';
+  'boot' | 'key' | 'drag' | 'detent' | 'label' | 'legend' | 'button' | 'auto' | 'api';
 export type DrawerId = 'legend' | 'plaque';
 
 export interface LitTile {
@@ -163,7 +155,8 @@ export class ExhibitStore {
       lastEpoch: i === PANORAMA ? s.lastEpoch : i,
       autoStart: s.auto ? this.now() : s.autoStart,
     });
-    if (changed) this.ignite(stageColor(i), stageAt(i).hum, 'origin', () => this.cascade(litListForStage(i)));
+    if (changed)
+      this.ignite(stageColor(i), stageAt(i).hum, 'origin', () => this.cascade(litListForStage(i)));
     else if (source === 'drag') this.sound.press();
   }
 

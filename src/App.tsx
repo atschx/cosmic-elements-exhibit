@@ -12,18 +12,17 @@ import { TelemetryHud } from '@/components/TelemetryHud/TelemetryHud';
 import { useDocumentSync } from '@/hooks/useDocumentSync';
 import { useFullscreenSync } from '@/hooks/useFullscreenSync';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
-import { useIsCompact } from '@/hooks/useMediaQuery';
+import { useLayoutMode } from '@/hooks/useMediaQuery';
 import { useViewportUnits } from '@/hooks/useViewportUnits';
 import { installPublicApi } from '@/publicApi';
 import { useExhibitStore } from '@/state/hooks';
 
 import '@/components/Panel/Panel.css';
-import '@/styles/responsive.css';
-import '@/styles/mobile.css';
 
 export function App() {
   const store = useExhibitStore();
-  const compact = useIsCompact();
+  const layout = useLayoutMode();
+  const compact = layout === 'compact';
 
   useDocumentSync();
   useKeyboardShortcuts();
@@ -39,7 +38,7 @@ export function App() {
     };
   }, [store]);
 
-  // a drawer left open on a tablet should not survive a rotation back to the wide layout
+  // a drawer left open on a tablet should not survive a rotation into a layout without drawers
   useEffect(() => {
     if (!compact) store.closeDrawer();
   }, [compact, store]);
@@ -47,12 +46,18 @@ export function App() {
   return (
     <>
       <Backdrop />
-      <div id="app" data-layout={compact ? 'compact' : 'wide'}>
+      <div id="app" data-layout={layout}>
         <Marquee />
-        <main className="stage">
-          {compact ? null : <LegendPanel />}
+        <main className={layout === 'stacked' ? 'stage stacked' : 'stage'}>
+          {layout === 'wide' ? <LegendPanel /> : null}
           <LightboxWall />
-          {compact ? null : <PlaquePanel />}
+          {layout === 'wide' ? <PlaquePanel /> : null}
+          {layout === 'stacked' ? (
+            <div className="stage-lower">
+              <LegendPanel />
+              <PlaquePanel />
+            </div>
+          ) : null}
         </main>
         <ConsoleDeck />
       </div>

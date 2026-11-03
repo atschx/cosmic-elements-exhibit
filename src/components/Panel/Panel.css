@@ -31,7 +31,8 @@ html.present .stage {
     transform 0.5s ease 0.1s,
     visibility 0s linear 0s;
 }
-html.present .panel {
+/* only the side panels fold away in presentation mode; drawer copies on compact screens stay usable */
+html.present .stage > .panel {
   opacity: 0;
   visibility: hidden;
   transform: scale(0.94);

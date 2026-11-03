@@ -46,7 +46,13 @@ export function LightboxWall() {
   return (
     <section className="wall" aria-label="元素灯箱矩阵墙 Cosmic lightbox matrix wall">
       <div className="wall-scroll">
-        <div ref={gridRef} className="grid" id="grid" role="group" aria-label="周期表 Periodic table">
+        <div
+          ref={gridRef}
+          className="grid"
+          id="grid"
+          role="group"
+          aria-label="周期表 Periodic table"
+        >
           {ELEMENTS.map((el) => {
             const z = el.atomicNumber;
             const entry = lit.get(z);

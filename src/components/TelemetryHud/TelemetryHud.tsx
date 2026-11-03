@@ -213,9 +213,7 @@ export function TelemetryHud() {
         </div>
         <div className="wide">
           <span className="lbl">宇宙时标 · Cosmic epoch</span>
-          <b id="hudEpoch">
-            {stage ? `${stage.numeral} · ${stage.timeZh} · ${stage.timeEn}` : ''}
-          </b>
+          <b id="hudEpoch">{stage ? `${stage.numeral} · ${stage.timeZh} · ${stage.timeEn}` : ''}</b>
         </div>
       </div>
       <div className="hud-ab">

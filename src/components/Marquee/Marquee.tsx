@@ -7,13 +7,7 @@ import { Subtitle } from './Subtitle';
 
 function ObservatoryIcon() {
   return (
-    <svg
-      viewBox="0 0 48 48"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
       <path d="M6 30a18 18 0 0 1 36 0" />
       <path d="M4 30h40" />
       <path d="M14 30v8h20v-8" />
@@ -56,6 +50,7 @@ export function Marquee() {
           onClick={press(() => store.toggleDrawer('legend'))}
           aria-pressed={drawer === 'legend'}
           aria-controls="drawer-legend"
+          aria-label="核合成过程图例 · Legend"
           title="核合成过程图例 · Legend"
         >
           <svg
@@ -79,7 +74,7 @@ export function Marquee() {
 
       <div className="title">
         <h1>
-          上海天文馆 · 宇宙元素起源表<span className="sep">|</span>
+          <span className="venue">上海天文馆 · </span>宇宙元素起源表<span className="sep">|</span>
           <span className="en">Shanghai Astronomy Museum: Cosmic Nucleosynthesis</span>
         </h1>
         <Subtitle zh={tag.zh} en={tag.en} />
@@ -92,6 +87,7 @@ export function Marquee() {
           onClick={press(() => store.toggleDrawer('plaque'))}
           aria-pressed={drawer === 'plaque'}
           aria-controls="drawer-plaque"
+          aria-label="当前纪元铭牌 · Plaque"
           title="当前纪元铭牌 · Plaque"
         >
           <svg

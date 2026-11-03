@@ -15,7 +15,10 @@ export function useKeyboardShortcuts(): void {
     const onKey = (e: KeyboardEvent): void => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const t = e.target;
-      if (t instanceof HTMLElement && (t.closest('[role="slider"]') || t.closest('input, textarea')))
+      if (
+        t instanceof HTMLElement &&
+        (t.closest('[role="slider"]') || t.closest('input, textarea'))
+      )
         return;
       const s = store.getState();
       switch (e.key) {

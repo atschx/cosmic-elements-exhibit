@@ -1,7 +1,7 @@
 # 宇宙元素起源表 · Cosmic Origin of Elements
 
 上海天文馆「宇宙元素起源表」互动展陈的网页复刻：一面 118 格的元素灯箱墙，两条机械拉杆，一个会呼吸的玻璃 HUD。
-A web recreation of the Shanghai Astronomy Museum's *Cosmic Nucleosynthesis* exhibit: a 118-tile lightbox wall, two mechanical levers, and a glass telemetry HUD.
+A web recreation of the Shanghai Astronomy Museum's _Cosmic Nucleosynthesis_ exhibit: a 118-tile lightbox wall, two mechanical levers, and a glass telemetry HUD.
 
 **在线演示 · Live demo:** <https://atschx.github.io/cosmic-elements-exhibit/>
 
@@ -24,25 +24,25 @@ A web recreation of the Shanghai Astronomy Museum's *Cosmic Nucleosynthesis* exh
 - **演示模式** — 一键收起两侧面板与状态屏，灯箱墙放大填满屏幕，适合投影。
   **Presentation mode** — collapses both side panels and the LCD so the wall fills the screen; made for projectors.
 
-| 纪元态 · Epoch (NS mergers, Au pinned) | 丰度态 · Abundance (Human body) |
-| --- | --- |
-| ![纪元](media/exhibit-epoch.png) | ![丰度](media/exhibit-abundance-human.png) |
+| 纪元态 · Epoch (NS mergers, Au pinned) | 丰度态 · Abundance (Human body)            |
+| -------------------------------------- | ------------------------------------------ |
+| ![纪元](media/exhibit-epoch.png)       | ![丰度](media/exhibit-abundance-human.png) |
 
 ![演示模式 · Presentation mode](media/exhibit-v3-presentation-1920.png)
 
 ## 操作 · Controls
 
-| 按键 · Key | 作用 · Action |
-| --- | --- |
-| `←` `→` | 推动当前拉杆 · Move the active lever |
-| `↑` `↓` | 切换拉杆：来源 / 丰度 · Switch lever: origin / abundance |
-| `1`–`8` | 直达纪元 · Jump to an epoch |
-| `Space` | 自动巡航演播（9 s 倒计时环）· Docent loop |
-| `A` | 全景全开 · All starstuff |
-| `P` | 演示模式 · Presentation mode |
-| `F` | 全屏 · Fullscreen |
-| `M` | 静音 · Mute |
-| `Esc` | 取消固定 / 停止巡航 · Unpin / stop loop |
+| 按键 · Key | 作用 · Action                                            |
+| ---------- | -------------------------------------------------------- |
+| `←` `→`    | 推动当前拉杆 · Move the active lever                     |
+| `↑` `↓`    | 切换拉杆：来源 / 丰度 · Switch lever: origin / abundance |
+| `1`–`8`    | 直达纪元 · Jump to an epoch                              |
+| `Space`    | 自动巡航演播（9 s 倒计时环）· Docent loop                |
+| `A`        | 全景全开 · All starstuff                                 |
+| `P`        | 演示模式 · Presentation mode                             |
+| `F`        | 全屏 · Fullscreen                                        |
+| `M`        | 静音 · Mute                                              |
+| `Esc`      | 取消固定 / 停止巡航 · Unpin / stop loop                  |
 
 鼠标：悬停格子显示 HUD，点击固定；拉杆支持拖拽与点击刻度。
 Mouse: hover a tile for the HUD, click to pin; levers can be dragged or clicked at a notch.
@@ -61,11 +61,11 @@ git remote add origin https://github.com/<your-github-username>/<repo-name>.git
 git push -u origin main
 ```
 
-首次推送后，到 **Settings → Pages** 确认 *Source* 为 **GitHub Actions**（工作流会尝试自动启用；若仓库策略不允许，手动选一次即可）。几十秒后站点就会出现在 `https://<your-github-username>.github.io/<repo-name>/`。
-After the first push, open **Settings → Pages** and make sure *Source* is **GitHub Actions** (the workflow tries to enable it automatically). The site appears at the URL above within a minute.
+首次推送后，到 **Settings → Pages** 确认 _Source_ 为 **GitHub Actions**（工作流会尝试自动启用；若仓库策略不允许，手动选一次即可）。几十秒后站点就会出现在 `https://<your-github-username>.github.io/<repo-name>/`。
+After the first push, open **Settings → Pages** and make sure _Source_ is **GitHub Actions** (the workflow tries to enable it automatically). The site appears at the URL above within a minute.
 
-不想用 Actions？也可以选 *Deploy from a branch* → `main` / `/docs`，效果相同。
-Prefer branch deploys? *Deploy from a branch* → `main` / `/docs` works too.
+不想用 Actions？也可以选 _Deploy from a branch_ → `main` / `/docs`，效果相同。
+Prefer branch deploys? _Deploy from a branch_ → `main` / `/docs` works too.
 
 ## 本地运行 · Run locally
 
@@ -74,7 +74,7 @@ Prefer branch deploys? *Deploy from a branch* → `main` / `/docs` works too.
 ## 数据来源 · Data
 
 - 元素来源分类参照馆内展板与 Johnson (2019) 的宇宙元素起源周期表；大爆炸核合成按馆内呈现只点亮 H 与 He，Li 归入宇宙射线散裂档并在叙事中说明其混合来源。
-  Origin categories follow the museum panel and Johnson's (2019) *Origin of the Elements* table; Big Bang lights H and He only, as in the museum, with Li's mixed origin explained in the narrative.
+  Origin categories follow the museum panel and Johnson's (2019) _Origin of the Elements_ table; Big Bang lights H and He only, as in the museum, with Li's mixed origin explained in the narrative.
 - 丰度：太阳 / 宇宙取 Asplund et al. (2009) 光球丰度换算为质量分数；地壳与海水取 CRC Handbook；大气按干空气质量分数；人体按 70 kg 参考人。
   Abundances: Asplund et al. (2009) photospheric values converted to mass fraction (Sun / Universe), CRC Handbook (crust, seawater), dry-air mass fractions (atmosphere), 70 kg reference human.
 
