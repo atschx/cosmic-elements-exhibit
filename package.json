@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "preview:single": "vite preview --mode single --outDir dist-single",
     "validate:data": "bun run scripts/validate-data.ts",
-    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.e2e.json --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

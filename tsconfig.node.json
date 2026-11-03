@@ -23,9 +23,8 @@
   },
   "include": [
     "vite.config.ts",
-    "playwright.config.ts",
     "scripts",
-    "tests",
+    "tests/unit",
     "src/data",
     "src/model",
     "src/data/**/*.json"

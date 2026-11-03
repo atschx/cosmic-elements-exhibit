@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"]
+  },
+  "include": [
+    "playwright.config.ts",
+    "tests/e2e",
+    "src/publicApi.ts",
+    "src/state/exhibitStore.ts",
+    "src/audio/soundEngine.ts",
+    "src/model",
+    "src/data",
+    "src/data/**/*.json"
+  ],
+  "exclude": ["src/model/glyphs.ts"]
+}
